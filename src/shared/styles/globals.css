@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#sidebar-toggle:checked ~ .flex > .fixed-no-scroll {
+  @apply absolute z-50 block w-full;
+}
+
+#sidebar-toggle:checked ~ .flex > .content-wrapper {
+  @apply translate-y-[10%] transform-gpu blur-3xl transition duration-300 ease-out-cubic md:blur-none;
+}
+
+#sidebar-toggle:not(:checked) ~ .flex > .content-wrapper {
+  @apply translate-y-0 transform-gpu blur-none transition duration-300 ease-out-cubic;
+}
+
+.hamburger-menu {
+  @apply relative flex h-[12px] w-[24px] cursor-pointer flex-col items-center justify-between;
+}
+
+.hamburger-bar {
+  @apply h-[2px] w-4 transform-gpu rounded-medium bg-foreground transition duration-300 ease-out-cubic;
+}
+
+#sidebar-toggle ~ .label > .hamburger-menu .bar2 {
+  @apply ml-0.5 w-3.5;
+}
+
+#sidebar-toggle:checked ~ .label > .hamburger-menu .bar1 {
+  transform: rotate(-45deg) translate(-3px, 3px);
+}
+
+#sidebar-toggle:checked ~ .label > .hamburger-menu .bar2 {
+  opacity: 0;
+}
+
+#sidebar-toggle:checked ~ .label > .hamburger-menu .bar3 {
+  transform: rotate(45deg) translate(-4px, -4px);
+}
