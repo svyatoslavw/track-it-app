@@ -1,40 +1,15 @@
-import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai"
+import Groq from "groq-sdk"
 
-export const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY, dangerouslyAllowBrowser: true })
 
-const safetySettings = [
-  {
-    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-    threshold: HarmBlockThreshold.BLOCK_NONE
-  },
-  {
-    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-    threshold: HarmBlockThreshold.BLOCK_NONE
-  },
-  {
-    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-    threshold: HarmBlockThreshold.BLOCK_NONE
-  },
-  {
-    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-    threshold: HarmBlockThreshold.BLOCK_NONE
-  }
-  // {
-  //   category: HarmCategory.HARM_CATEGORY_UNSPECIFIED,
-  //   threshold: HarmBlockThreshold.BLOCK_NONE,
-  // },
-]
+export const CompletionAIModel = async (content: string) => {
+  const response = await groq.chat.completions.create({
+    model: "llama3-8b-8192",
+    temperature: 0.8,
+    messages: [{ role: "user", content }],
+    max_tokens: 1024,
+    stop: ["\n"]
+  })
 
-export const CompletionAIModel = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
-  generationConfig: {
-    candidateCount: 1,
-    stopSequences: ["\n"],
-    // A token is equivalent to about 4 characters for Gemini models. 100 tokens are about 60-80 English words.
-    maxOutputTokens: 10,
-    temperature: 0.5
-  },
-  safetySettings
-})
-
-const prompt = "Write a story about a magic backpack."
+  return response.choices[0].message.content || ""
+}

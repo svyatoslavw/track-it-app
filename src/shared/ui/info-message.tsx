@@ -10,11 +10,11 @@ type InfoTextProps = {
 const InfoMessage = ({ id, text, asterisk = "single", isSm = false }: InfoTextProps) => {
   return (
     <p
-      id={id}
       className={cn(
         "font-medium text-foreground/70 hover:cursor-none hover:text-foreground",
         isSm ? "text-sm" : "text-xs"
       )}
+      id={id}
     >
       {asterisk === "triple" && " *** "}
       {asterisk === "double" && " ** "}

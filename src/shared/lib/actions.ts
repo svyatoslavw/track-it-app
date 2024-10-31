@@ -1,10 +1,16 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { cache } from "react"
 
+import { ROUTES } from "../config"
+import { RESPONSE_STATUS } from "../constans"
+
 import { CompletionAIModel } from "./ai"
-import { ICategory } from "./types"
-import { DayWithEmoji } from "@/app/home"
+import { prisma } from "./db"
+import { ICategory, ICreateHabit } from "./types"
+import { DayWithEmoji } from "@/app/(default)/home"
+import { auth } from "@/auth"
 
 const habitCategories: ICategory[] = [
   {
@@ -88,25 +94,26 @@ const days: DayWithEmoji[] = [
   { emoji: "🌙", day: "Saturday" }
 ]
 
-export async function getAmountAI(userPrompt: string): Promise<string> {
+export async function getHabitTimeAI(userPrompt: string): Promise<string> {
   if (!userPrompt) {
     throw new Error("User prompt is required.")
   }
 
   try {
     // const prompt = `${userPrompt}. Provide a numerical estimate of the cost in ${currency}, disregarding real-time price fluctuations. Omit any decimal points, commas, or other symbols.`
-    const prompt = `${userPrompt}. Specify the date in the format of hours and minutes separated by colons, for example. 11:45, 04:34 The best time to perform this action in real life is ${userPrompt}. Even if you can’t determine the time, then deduce it at your own discretion. Omit decimal points, commas, and other characters.`
+    const prompt =
+      `${userPrompt}. Specify the time for performing this action in the format "HH:mm" (for example, 11:45 or 04:34). ` +
+      "Choose the best time to perform this action in real life, but if it is impossible to determine an exact time, select it at your own discretion. " +
+      "Only display the time, without any additional text."
 
-    const content = await CompletionAIModel.generateContent(prompt)
-    const text = content.response.text().trim()
-    return text
+    return CompletionAIModel(prompt)
   } catch (err) {
     throw err
   }
 }
-export const getCachedAmountAI = cache(getAmountAI)
+export const getCachedHabitTimeAI = cache(getHabitTimeAI)
 
-export async function getCategoryItemNameAI(userPrompt: string): Promise<string> {
+export async function getHabitCategoryAI(userPrompt: string): Promise<string> {
   if (!userPrompt) {
     throw new Error("Categories or user prompt are required.")
   }
@@ -117,18 +124,18 @@ export async function getCategoryItemNameAI(userPrompt: string): Promise<string>
       .filter(Boolean)
       .join(", ")
 
-    const prompt = `Given a list of categories: ${categoriesStr} - Select the most appropriate category from the list for the "${userPrompt}" prompt in word. Display only the category, without further ado. Even if you cannot determine the time, then withdraw it randomly.`
+    const prompt =
+      `Given a list of categories: ${categoriesStr} - Select the most appropriate category from the list for the "${userPrompt}" prompt in word. ` +
+      "Display only the category, without any additional text. Even if you cannot determine the time, then withdraw it randomly, without any additional text."
 
-    const content = await CompletionAIModel.generateContent(prompt)
-    const text = content.response.text().trim()
-    return text
+    return CompletionAIModel(prompt)
   } catch (err) {
     throw err
   }
 }
-export const getCachedCategoryItemAI = cache(getCategoryItemNameAI)
+export const getCachedHabitCategoryAI = cache(getHabitCategoryAI)
 
-export async function getDayItemNameAI(userPrompt: string): Promise<string> {
+export async function getHabitDayAI(userPrompt: string): Promise<string> {
   if (!userPrompt) {
     throw new Error("Days or user prompt are required.")
   }
@@ -136,13 +143,71 @@ export async function getDayItemNameAI(userPrompt: string): Promise<string> {
   try {
     const daysStr = days.flatMap((day) => day.day).join(", ")
 
-    const prompt = `Given a list of days: ${daysStr} - Select the best day to complete your habit - ${userPrompt} with one word from the list. Display only the day, without further ado. Even if you cannot determine the time, then withdraw it randomly.`
+    const prompt =
+      `Given a list of days: ${daysStr} - Select the best day to complete your habit - ${userPrompt} with one word from the list. ` +
+      "Display only the day, without any additional text. Even if you cannot determine the time, then withdraw it randomly."
 
-    const content = await CompletionAIModel.generateContent(prompt)
-    const text = content.response.text().trim()
-    return text
+    return CompletionAIModel(prompt)
   } catch (err) {
     throw err
   }
 }
-export const getCachedDayItemNameAI = cache(getCategoryItemNameAI)
+export const getCachedHabitDayAI = cache(getHabitDayAI)
+
+export async function createHabit(data: ICreateHabit) {
+  const session = await auth()
+
+  if (!session) {
+    throw new Error("Session is required.")
+  }
+
+  if (!session.user.email) {
+    throw new Error("User email is required.")
+  }
+
+  const newHabit = prisma.habit.create({
+    data: {
+      title: data.title,
+      time: data.time,
+      category: data.category,
+      day: data.day,
+      user: { connect: { email: session.user.email } }
+    }
+  })
+
+  revalidatePath(ROUTES.HOME)
+
+  return { status: RESPONSE_STATUS.SUCCESS, data: newHabit }
+}
+
+export async function deleteHabit(id: string) {
+  const session = await auth()
+
+  if (!session) {
+    throw new Error("Session is required.")
+  }
+
+  const deletedHabit = await prisma.habit.delete({
+    where: { id }
+  })
+
+  revalidatePath(ROUTES.HOME)
+
+  return { status: RESPONSE_STATUS.SUCCESS, data: deletedHabit }
+}
+
+export async function getHabits() {
+  const session = await auth()
+
+  if (!session) {
+    throw new Error("Session is required.")
+  }
+
+  const habits = prisma.habit.findMany({
+    where: {
+      user: { email: session.user.email }
+    }
+  })
+
+  return habits
+}

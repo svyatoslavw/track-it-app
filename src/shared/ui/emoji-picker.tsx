@@ -15,12 +15,12 @@ function EmojiesPicker({ onClick }: TProps) {
   const emojiPicker = useMemo(
     () => (
       <EmojiPicker
-        lazyLoadEmojis={true}
-        onEmojiClick={onClick}
-        searchPlaceHolder="Search emoji..."
-        suggestedEmojisMode={SuggestionMode.RECENT}
-        skinTonePickerLocation={SkinTonePickerLocation.PREVIEW}
         className="my-2"
+        lazyLoadEmojis={true}
+        searchPlaceHolder="Search emoji..."
+        skinTonePickerLocation={SkinTonePickerLocation.PREVIEW}
+        suggestedEmojisMode={SuggestionMode.RECENT}
+        onEmojiClick={onClick}
       />
     ),
     [onClick]

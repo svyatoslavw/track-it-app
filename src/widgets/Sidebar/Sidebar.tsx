@@ -1,6 +1,5 @@
 "use client"
 
-import { Badge } from "@nextui-org/badge"
 import { cn } from "@nextui-org/theme"
 import {
   AlignLeftIcon,
@@ -9,13 +8,16 @@ import {
   HouseIcon,
   LucideIcon,
   MessageSquareShareIcon,
+  RocketIcon,
   Settings2Icon
 } from "lucide-react"
-import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
+import { UserInfo } from "@/entities/user"
 import { ROUTES, SIDEBAR_TITlES } from "@/shared/config"
+import { IUser } from "@/shared/lib"
+import { Logotype } from "@/shared/ui"
 
 interface SidebarLink {
   title: string
@@ -28,6 +30,11 @@ const topNavLinks: SidebarLink[] = [
     title: SIDEBAR_TITlES.HOME,
     url: ROUTES.HOME,
     icon: HouseIcon
+  },
+  {
+    title: SIDEBAR_TITlES.HABITS,
+    url: ROUTES.HABITS,
+    icon: RocketIcon
   },
   {
     title: SIDEBAR_TITlES.ANALYTICS,
@@ -59,51 +66,28 @@ const bottomNavLinks: SidebarLink[] = [
   }
 ]
 
-const Sidebar = () => {
+const Sidebar = ({ user }: { user: IUser | undefined }) => {
   const pathname = usePathname()
-  const withLogo = true
 
   return (
     <>
       <div className="h-screen overflow-hidden">
-        <input type="checkbox" id="sidebar-toggle" className="hidden" />
+        <input className="hidden" id="sidebar-toggle" type="checkbox" />
         <div className="flex h-full">
-          <div className="fixed-no-scroll hidden h-full flex-none bg-foreground-50 md:flex">
+          <div className="fixed-no-scroll hidden h-full flex-none bg-foreground-200 md:flex">
             <div className="flex h-screen flex-col items-start justify-between p-4 md:p-8">
-              <nav className={"item-center flex w-full flex-col items-start gap-4 md:w-56"}>
-                {withLogo && (
-                  <Badge
-                    content={
-                      <span className="rounded-md bg-primary px-1.5 text-xs text-foreground-50">
-                        Beta
-                      </span>
-                    }
-                    classNames={{
-                      badge: "right-3 border-0 bg-transparent cursor-pointer md:hover:opacity-hover"
-                    }}
-                  >
-                    <Link className="flex select-none items-center justify-start gap-1" href="/">
-                      <Image
-                        draggable={false}
-                        src="/logo5.webp"
-                        alt="logo"
-                        width={70}
-                        height={70}
-                        className="rounded-2xl"
-                      />
-                    </Link>
-                  </Badge>
-                )}
+              <nav className={"item-center flex w-full flex-col items-start gap-4 md:w-40 lg:w-56"}>
+                <Logotype />
                 {topNavLinks.map((link) => {
                   return (
                     <Link
+                      key={link.url}
                       className={cn(
                         "flex items-center gap-2 font-bold text-foreground/70 hover:text-foreground",
                         {
                           "text-foreground": pathname === link.url
                         }
                       )}
-                      key={link.url}
                       href={link.url}
                     >
                       <link.icon size={16} />
@@ -112,12 +96,12 @@ const Sidebar = () => {
                   )
                 })}
               </nav>
-              <nav className={"item-center flex w-full flex-col items-start gap-4 md:w-56"}>
+              <nav className={"item-center flex w-full flex-col items-start gap-4 md:w-40 lg:w-56"}>
                 {bottomNavLinks.map((link) => {
                   return (
                     <Link
-                      className="flex items-center gap-2 font-bold text-foreground/70 hover:text-foreground"
                       key={link.url}
+                      className="flex items-center gap-2 font-bold text-foreground/70 hover:text-foreground"
                       href={link.url}
                     >
                       <link.icon size={16} />
@@ -125,14 +109,15 @@ const Sidebar = () => {
                     </Link>
                   )
                 })}
+                {user && <UserInfo user={user} />}
               </nav>
             </div>
           </div>
         </div>
         <label
           aria-label="Open Menu"
-          htmlFor="sidebar-toggle"
           className="label fixed right-10 top-5 z-50 cursor-pointer rounded-md bg-background/80 px-[3px] py-[8px] backdrop-blur-3xl md:right-[32px] md:top-[32px] md:hidden"
+          htmlFor="sidebar-toggle"
         >
           <div className="hamburger-menu">
             <div className="hamburger-bar bar1" />

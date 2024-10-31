@@ -18,31 +18,32 @@ const AiLogotype = ({ withTitle = false }: AiLogotypeProps) => {
       {AI_NAME.FULL}
     </span>
   )
+
   return (
     <div className="flex items-center justify-center">
       {withTitle ? (
         title
       ) : (
         <Popover
-          size="sm"
           backdrop="opaque"
-          radius="sm"
           classNames={{
             base: "before:bg-gradient-to-b text-md before:from-blue-400 before:via-purple-400 before:to-red-400 bg-clip-text",
             content: cn("text-center")
           }}
+          radius="sm"
+          size="sm"
         >
           <PopoverTrigger className="focus-visible:hidden">
             <Image
-              src="/ai-badge.webp"
-              width={12}
-              height={12}
-              alt={AI_NAME.FULL}
               priority
               unoptimized
+              alt={AI_NAME.FULL}
               className={cn(
                 "inline-block cursor-pointer select-none drop-shadow-[0_1px_2px_#62A4FA] md:hover:opacity-hover"
               )}
+              height={12}
+              src="/ai-badge.webp"
+              width={12}
             />
           </PopoverTrigger>
           <PopoverContent>

@@ -3,20 +3,32 @@
 import { Button } from "@nextui-org/button"
 import { Input } from "@nextui-org/input"
 import { Spinner } from "@nextui-org/spinner"
-import type { EmojiClickData } from "emoji-picker-react"
+import { EmojiClickData } from "emoji-picker-react"
 import { useFormik } from "formik"
 import { SquarePen } from "lucide-react"
 import dynamic from "next/dynamic"
 import { memo, useState } from "react"
 
-import type { ICategoryItem } from "../lib"
-import { useCategoryStore } from "../store"
+import { type ICategoryItem } from "@/shared/lib"
+import { useCategoryStore } from "@/shared/store"
 
-interface CategoryItemProps {
-  item: ICategoryItem
-}
+const EmojiPicker = dynamic(() => import("../../shared/ui/emoji-picker"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex w-full justify-center">
+      <Spinner
+        classNames={{
+          label: "text-sm font-bold",
+          circle1: "border-b-primary",
+          circle2: "border-b-primary-600"
+        }}
+        label="Just a second..."
+      />
+    </div>
+  )
+})
 
-const CategoryItem = ({ item }: CategoryItemProps) => {
+const UpdateCategoryItem = ({ item }: { item: ICategoryItem }) => {
   const [isEditing, setIsEditing] = useState(false)
   const { updateCategory } = useCategoryStore()
 
@@ -35,22 +47,6 @@ const CategoryItem = ({ item }: CategoryItemProps) => {
     formik.setValues({ ...formik.values, emoji: emoji.emoji })
   }
 
-  const EmojiPicker = dynamic(() => import("./emoji-picker"), {
-    ssr: false,
-    loading: () => (
-      <div className="flex w-full justify-center">
-        <Spinner
-          classNames={{
-            label: "text-sm font-bold",
-            circle1: "border-b-primary",
-            circle2: "border-b-primary-600"
-          }}
-          label="Just a second..."
-        />
-      </div>
-    )
-  })
-
   return (
     <div key={item.name}>
       {!isEditing ? (
@@ -60,9 +56,9 @@ const CategoryItem = ({ item }: CategoryItemProps) => {
             <p className="text-sm font-bold sm:text-lg">{item.name}</p>
           </div>
           <Button
-            onClick={() => setIsEditing(!isEditing)}
             color="secondary"
             startContent={<SquarePen size={16} />}
+            onClick={() => setIsEditing(!isEditing)}
           >
             Edit
           </Button>
@@ -73,16 +69,16 @@ const CategoryItem = ({ item }: CategoryItemProps) => {
             <div className="flex items-center gap-2">
               <p className="rounded-lg bg-primary-50 px-4 py-2">{formik.values.emoji}</p>
               <Input
+                classNames={{ input: "text-lg font-bold" }}
+                color="primary"
+                defaultValue={item.name}
                 name="name"
                 type="text"
-                onChange={formik.handleChange}
                 value={formik.values.name}
-                defaultValue={item.name}
-                color="primary"
-                classNames={{ input: "text-lg font-bold" }}
+                onChange={formik.handleChange}
               />
             </div>
-            <Button type="submit" color="danger" startContent={<SquarePen size={16} />}>
+            <Button color="danger" startContent={<SquarePen size={16} />} type="submit">
               Save
             </Button>
           </div>
@@ -93,4 +89,4 @@ const CategoryItem = ({ item }: CategoryItemProps) => {
   )
 }
 
-export default memo(CategoryItem)
+export default memo(UpdateCategoryItem)

@@ -1,11 +1,9 @@
-import { Link } from "@nextui-org/link"
 import clsx from "clsx"
 import { Metadata, Viewport } from "next"
 import { Rethink_Sans as FontSans } from "next/font/google"
 
 import { Providers } from "./providers"
 import "@/shared/styles/globals.css"
-import { Sidebar } from "@/shared/ui"
 
 export const metadata: Metadata = {
   title: {
@@ -18,9 +16,10 @@ export const metadata: Metadata = {
   }
 }
 
-export const fontSans = FontSans({
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
+  fallback: ["Helvetica", "Arial", "sans-serif"],
   weight: ["400", "500", "600", "700", "800"]
 })
 
@@ -36,25 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html suppressHydrationWarning lang="en">
       <head />
       <body className={clsx("min-h-screen font-sans antialiased", fontSans.variable)}>
-        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
-          <div className="relative flex h-screen bg-foreground-50">
-            <Sidebar />
-            <div className="flex flex-1 flex-col overflow-y-auto">
-              <main className="container w-full max-w-7xl flex-grow px-6 pt-10">{children}</main>
-              <footer className="flex w-full items-center justify-center py-3">
-                <Link
-                  isExternal
-                  className="flex items-center gap-1 text-current"
-                  href="https://nextui-docs-v2.vercel.app?utm_source=next-app-template"
-                  title="nextui.org homepage"
-                >
-                  <span className="text-default-600">Powered by</span>
-                  <p className="text-primary">NextUI</p>
-                </Link>
-              </footer>
-            </div>
-          </div>
-        </Providers>
+        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>{children}</Providers>
       </body>
     </html>
   )
