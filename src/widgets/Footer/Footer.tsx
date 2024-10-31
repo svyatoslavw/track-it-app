@@ -17,7 +17,7 @@ const socialLinks: { url: string; icon: LucideIcon }[] = [
 
 const Footer = () => {
   return (
-    <footer className="mb-2 flex w-full flex-col items-center justify-center gap-2 text-xs font-medium">
+    <footer className="mb-2 flex w-full flex-col items-center justify-center gap-1 text-xs font-medium">
       <div className="flex justify-center gap-2">
         {socialLinks.map((link) => {
           return (
@@ -34,7 +34,12 @@ const Footer = () => {
       </div>
       <div>
         {APP_NAME.SHORT} &copy; {new Date().getFullYear()}. All rights reserved | design by{" "}
-        <Link href="https://github.com/svyatoslavw" rel="noopener noreferrer" target="_blank">
+        <Link
+          className="cursor-pointer underline"
+          href="https://github.com/svyatoslavw"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           svyatoslavw
         </Link>
         .

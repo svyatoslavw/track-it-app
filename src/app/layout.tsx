@@ -3,17 +3,15 @@ import { Metadata, Viewport } from "next"
 import { Rethink_Sans as FontSans } from "next/font/google"
 
 import { Providers } from "./providers"
+import { APP_METADATA, APP_TITLE } from "@/shared/config"
 import "@/shared/styles/globals.css"
 
 export const metadata: Metadata = {
   title: {
-    default: "TrackIt",
-    template: `%s - TrackIt`
+    default: APP_TITLE,
+    template: `%s | ${APP_TITLE}`
   },
-  description: "TrackIt is a tool for tracking your progress and achieving your goals.",
-  icons: {
-    icon: "/favicon.ico"
-  }
+  ...APP_METADATA
 }
 
 const fontSans = FontSans({

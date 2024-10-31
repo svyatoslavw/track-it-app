@@ -4,7 +4,8 @@ const nextConfig = {
     GROQ_API_KEY: process.env.GROQ_API_KEY,
     AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
     AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
-    AUTH_SECRET: process.env.AUTH_SECRET
+    AUTH_SECRET: process.env.AUTH_SECRET,
+    APP_URL: process.env.APP_URL
   },
   images: {
     remotePatterns: [
