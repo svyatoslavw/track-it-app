@@ -8,7 +8,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   return (
     <div className="relative flex h-screen bg-foreground-200">
       <Sidebar user={session?.user} />
-      <div className="flex flex-1 flex-col overflow-y-auto">
+      <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
         <main className="container mb-4 w-full max-w-7xl flex-grow px-6">{children}</main>
         <Footer />
       </div>

@@ -86,10 +86,6 @@ export const APP_TITLE = `${APP_NAME.SHORT} - AI-powered habit tracker`
 
 export const APP_METADATA: Metadata = {
   description: "TrackIt is a tool for tracking your progress and achieving your goals.",
-  icons: {
-    icon: "/512x512.png",
-    shortcut: "/256x256.png"
-  },
   metadataBase: new URL(APP_URL),
   applicationName: APP_NAME.SHORT,
   creator: SEO.CREATOR,
@@ -98,6 +94,7 @@ export const APP_METADATA: Metadata = {
     url: SEO.GITHUB_URL
   },
   keywords: SEO.SITE_KEYWORDS,
+  manifest: "/manifest.json",
   openGraph: {
     type: "website",
     description: "AI-powered resume builder",
@@ -107,7 +104,7 @@ export const APP_METADATA: Metadata = {
     emails: `example@${APP_NAME.SHORT}`,
     images: [
       {
-        url: `${APP_URL}/opengraph.png`,
+        url: `${APP_URL}/images/opengraph.png`,
         width: 1280,
         height: 640,
         alt: APP_NAME.FULL
@@ -119,7 +116,7 @@ export const APP_METADATA: Metadata = {
     statusBarStyle: "black-translucent",
     title: APP_NAME.SHORT,
     startupImage: {
-      url: "/256x256.png"
+      url: "/images/android-chrome-256x256.png"
     }
   },
   robots: {

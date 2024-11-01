@@ -33,20 +33,20 @@ export const enum EnumUserRoles {
   ADMIN = "ADMIN"
 }
 
-export interface IUser {
-  id: number
+interface CommonModel {
+  id: string
   createdAt: string
-  loggedAt: string
+  updatedAt: string
+}
 
+export interface IUser extends CommonModel {
   name: string
   email: string
   image: string
   role: EnumUserRoles
 }
 
-export interface IHabit {
-  id: string
-
+export interface IHabit extends CommonModel {
   title: string
   day: string
   time: string

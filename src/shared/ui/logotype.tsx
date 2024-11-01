@@ -21,7 +21,7 @@ const Logotype = () => (
         className="rounded-2xl"
         draggable={false}
         height={70}
-        src="/logo5.webp"
+        src="/images/logo.webp"
         width={70}
       />
     </Link>

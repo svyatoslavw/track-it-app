@@ -81,13 +81,14 @@ const SignInForm = () => {
           </span>
         </p>
         <div className="flex flex-col items-center space-y-2">
-          {signInButtons.slice(0, 2).map(({ provider, title, isLoading, icon }) => (
+          {signInButtons.slice(0, 2).map(({ provider, title, isLoading, icon: Icon }) => (
             <AuthButton
               key={provider}
               className="min-w-[220px]"
               disabled={isAnyLoading}
-              icon={icon}
-              loading={isLoading}
+              startContent={!isLoading && <Icon className="size-4" />}
+              isLoading={isLoading}
+              isDisabled={isAnyLoading}
               title={title}
               onClick={(e) => onSignIn(e, provider)}
             />
@@ -101,13 +102,14 @@ const SignInForm = () => {
               value="more"
             >
               <div className="mt-2 flex flex-col items-center space-y-2">
-                {signInButtons.slice(2).map(({ provider, title, isLoading, icon }) => (
+                {signInButtons.slice(2).map(({ provider, title, isLoading, icon: Icon }) => (
                   <AuthButton
                     key={provider}
                     className="min-w-[220px]"
                     disabled={isAnyLoading}
-                    icon={icon}
-                    loading={isLoading}
+                    startContent={!isLoading && <Icon className="size-4" />}
+                    isLoading={isLoading}
+                    isDisabled={isAnyLoading}
                     title={title}
                     onClick={(e) => onSignIn(e, provider)}
                   />

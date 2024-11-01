@@ -42,7 +42,7 @@ const AiLogotype = ({ withTitle = false }: AiLogotypeProps) => {
                 "inline-block cursor-pointer select-none drop-shadow-[0_1px_2px_#62A4FA] md:hover:opacity-hover"
               )}
               height={12}
-              src="/ai-badge.webp"
+              src="/images/ai-badge.webp"
               width={12}
             />
           </PopoverTrigger>

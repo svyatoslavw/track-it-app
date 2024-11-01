@@ -8,6 +8,7 @@ type TBearStoreState = {
   categories: ICategory[]
   updateHeading: (item: ICategory) => void
   updateCategory: (item: ICategoryItem) => void
+  reset: () => void
 }
 
 export const useCategoryStore = create<TBearStoreState>()(
