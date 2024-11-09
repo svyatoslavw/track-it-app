@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import { Metadata, Viewport } from "next"
-import { Rethink_Sans as FontSans } from "next/font/google"
+import { Rethink_Sans } from "next/font/google"
 
 import { Providers } from "./providers"
 import { APP_METADATA, APP_TITLE } from "@/shared/config"
@@ -14,10 +14,10 @@ export const metadata: Metadata = {
   ...APP_METADATA
 }
 
-const fontSans = FontSans({
+const fontSans = Rethink_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
+  fallback: ["system-ui", "sans-serif"],
   weight: ["400", "500", "600", "700", "800"]
 })
 
@@ -32,17 +32,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html suppressHydrationWarning lang="en">
       <head>
-        <meta name="mobile-web-app-capable" content="yes" />
-        <link rel="icon" href="/favicon.ico" sizes="48x48" />
-        <link rel="icon" href="/icon?<generated>" type="image/<generated>" sizes="<generated>" />
+        <meta content="yes" name="mobile-web-app-capable" />
+        <link href="/favicon.ico" rel="icon" sizes="48x48" />
+        <link href="/icon?<generated>" rel="icon" sizes="<generated>" type="image/<generated>" />
         <link
-          rel="apple-touch-icon"
           href="/apple-icon?<generated>"
-          type="image/<generated>"
+          rel="apple-touch-icon"
           sizes="<generated>"
+          type="image/<generated>"
         />
       </head>
-      <body className={clsx("min-h-screen font-sans antialiased", fontSans.variable)}>
+      <body className={clsx("min-h-screen font-sans antialiased", fontSans.className)}>
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>{children}</Providers>
       </body>
     </html>

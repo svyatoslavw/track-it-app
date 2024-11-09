@@ -47,17 +47,17 @@ const UpdateHabitForm = ({ habit }: { habit: IHabit }) => {
                 className="w-24"
                 defaultValue={new Time(11, 45)}
                 isDisabled={isLoading}
-                onChange={(time) => onSelectTime(`${time.hour}:${time.minute}`)}
                 name="time"
-                value={
-                  new Time(+formik.values.time.split(":")[0], +formik.values.time.split(":")[1])
-                }
                 startContent={
                   <Clock10Icon
                     className="pointer-events-none flex-shrink-0 text-sm text-default-400"
                     size={16}
                   />
                 }
+                value={
+                  new Time(+formik.values.time.split(":")[0], +formik.values.time.split(":")[1])
+                }
+                onChange={(time) => onSelectTime(`${time.hour}:${time.minute}`)}
               />
             </Badge>
           </div>
@@ -129,9 +129,9 @@ const UpdateHabitForm = ({ habit }: { habit: IHabit }) => {
       </div>
       <div className="flex w-full items-center justify-end">
         <Button
+          color="primary"
           isDisabled={!formik.values.title}
           isLoading={isLoading}
-          color="primary"
           type="submit"
         >
           Update Habit

@@ -23,6 +23,7 @@ const HabitCalendar = ({ habits }: { habits: IHabit[] }) => {
 
     habits.forEach((habit) => {
       const days = habit.day.split(",") // Преобразуем строку в массив
+
       days.forEach((day) => daysSet.add(day.trim())) // Добавляем уникальные дни в Set
     })
 
@@ -54,7 +55,6 @@ const HabitCalendar = ({ habits }: { habits: IHabit[] }) => {
   return (
     <div className="flex flex-col gap-4">
       <Calendar
-        calendarWidth={350}
         aria-label="Date (Presets)"
         bottomContent={
           <RadioGroup
@@ -74,6 +74,7 @@ const HabitCalendar = ({ habits }: { habits: IHabit[] }) => {
             <CustomRadio value="14_days">14 days</CustomRadio>
           </RadioGroup>
         }
+        calendarWidth={350}
         classNames={{
           cellButton:
             "relative after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-1 after:h-1 after:-translate-x-1/2 after:-translate-y-1/2 after:bg-primary after:rounded-full",

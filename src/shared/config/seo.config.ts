@@ -82,6 +82,7 @@ const SEO = {
     "Track habits online"
   ]
 }
+
 export const APP_TITLE = `${APP_NAME.SHORT} - AI-powered habit tracker`
 
 export const APP_METADATA: Metadata = {

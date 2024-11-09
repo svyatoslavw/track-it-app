@@ -245,6 +245,7 @@ export async function getHabitById(id: string) {
   if (!habit) {
     throw new Error("Habit not found.")
   }
+
   return habit
 }
 

@@ -29,11 +29,11 @@ const HabitTable = ({ habits }: HabitTableProps) => {
           days.map((day) => (
             <TableDayColumn
               key={day.day}
+              categories={categories}
               day={day}
+              getShortDayName={getShortDayName}
               habits={groupedHabits[day.day] || []}
               isSelected={isSelected}
-              categories={categories}
-              getShortDayName={getShortDayName}
             />
           ))
         ) : (

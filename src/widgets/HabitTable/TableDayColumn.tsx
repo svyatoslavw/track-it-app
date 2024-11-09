@@ -23,11 +23,11 @@ const TableDayColumn = ({
     <div className={cn("my-3 w-24 text-sm", { "my-0 w-full": isSelected })}>
       <h5 className="text-2xl font-bold lg:text-lg">{`${day.emoji} ${getShortDayName(day.day)}.`}</h5>
       <div
-        style={{ backgroundColor: day.color }}
         className={cn("block rounded-lg", {
           "ml-0 h-[3px] w-full": isSelected,
           "ml-6 h-full min-h-28 w-[3px]": !isSelected
         })}
+        style={{ backgroundColor: day.color }}
       />
     </div>
     <div
@@ -38,9 +38,9 @@ const TableDayColumn = ({
     >
       {habits.map((habit) => (
         <HabitCard
-          className={cn({ "lg:w-full": isSelected })}
           key={habit.id}
           categories={categories}
+          className={cn({ "lg:w-full": isSelected })}
           habit={habit}
           variant="vertical"
         >

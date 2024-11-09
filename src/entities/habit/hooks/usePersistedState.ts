@@ -13,6 +13,7 @@ export function usePersistedState<T>(key: string, initialValue: T) {
   useEffect(() => {
     if (isHydrated) {
       const storedValue = localStorage.getItem(key)
+
       if (storedValue) setState(JSON.parse(storedValue))
     }
   }, [isHydrated])

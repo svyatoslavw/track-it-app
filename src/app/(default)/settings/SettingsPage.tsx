@@ -11,6 +11,7 @@ const SettingsPage = () => {
     signOut({ callbackUrl: "/" })
     reset()
   }
+
   return (
     <div>
       <Button color="danger" onClick={onLogout}>

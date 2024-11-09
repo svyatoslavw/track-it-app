@@ -9,6 +9,7 @@ const EditHabitPage = ({ habit }: { habit: IHabit }) => {
       <UpdateHabitForm habit={habit} />
     </PageWrapper>
   )
+
   return
 }
 

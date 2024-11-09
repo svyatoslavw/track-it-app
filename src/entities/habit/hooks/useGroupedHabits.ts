@@ -7,6 +7,7 @@ export function useGroupedHabits(habits: IHabit[]) {
         if (!acc[day]) acc[day] = []
         acc[day].push(habit)
       })
+
       return acc
     },
     {} as Record<string, IHabit[]>

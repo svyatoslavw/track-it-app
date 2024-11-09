@@ -86,9 +86,9 @@ const SignInForm = () => {
               key={provider}
               className="min-w-[220px]"
               disabled={isAnyLoading}
-              startContent={!isLoading && <Icon className="size-4" />}
-              isLoading={isLoading}
               isDisabled={isAnyLoading}
+              isLoading={isLoading}
+              startContent={!isLoading && <Icon className="size-4" />}
               title={title}
               onClick={(e) => onSignIn(e, provider)}
             />
@@ -107,9 +107,9 @@ const SignInForm = () => {
                     key={provider}
                     className="min-w-[220px]"
                     disabled={isAnyLoading}
-                    startContent={!isLoading && <Icon className="size-4" />}
-                    isLoading={isLoading}
                     isDisabled={isAnyLoading}
+                    isLoading={isLoading}
+                    startContent={!isLoading && <Icon className="size-4" />}
                     title={title}
                     onClick={(e) => onSignIn(e, provider)}
                   />

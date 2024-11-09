@@ -23,13 +23,6 @@ const CreateHabitForm = () => {
         }}
         color="primary"
         defaultValue={formik.values.title}
-        errorMessage={formik.errors.title}
-        isDisabled={isLoading}
-        name="title"
-        placeholder="Add your new habit"
-        type="text"
-        value={formik.values.title}
-        onChange={formik.handleChange}
         description={
           <div className="flex flex-wrap items-center sm:gap-1">
             <InfoMessage text={"Please specify your habit correctly. Enabled autocomplete with"} />
@@ -50,21 +43,28 @@ const CreateHabitForm = () => {
                 className="w-24"
                 defaultValue={new Time(11, 45)}
                 isDisabled={isLoading}
-                onChange={(time) => onSelectTime(`${time.hour}:${time.minute}`)}
                 name="time"
-                value={
-                  new Time(+formik.values.time.split(":")[0], +formik.values.time.split(":")[1])
-                }
                 startContent={
                   <Clock10Icon
                     className="pointer-events-none flex-shrink-0 text-sm text-default-400"
                     size={16}
                   />
                 }
+                value={
+                  new Time(+formik.values.time.split(":")[0], +formik.values.time.split(":")[1])
+                }
+                onChange={(time) => onSelectTime(`${time.hour}:${time.minute}`)}
               />
             </Badge>
           </div>
         }
+        errorMessage={formik.errors.title}
+        isDisabled={isLoading}
+        name="title"
+        placeholder="Add your new habit"
+        type="text"
+        value={formik.values.title}
+        onChange={formik.handleChange}
       />
       <div>
         <Badge
@@ -144,9 +144,9 @@ const CreateHabitForm = () => {
       </div>
       <div>
         <Button
+          color="primary"
           isDisabled={!formik.values.title}
           isLoading={isLoading}
-          color="primary"
           type="submit"
         >
           Add Habit

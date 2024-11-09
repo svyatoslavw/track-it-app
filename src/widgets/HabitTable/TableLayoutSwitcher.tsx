@@ -14,6 +14,7 @@ const TableLayoutSwitcher = ({ isSelected, onValueChange }: TableLayoutSwitcherP
       className="hidden items-center md:flex"
       classNames={{ wrapper: "bg-white", label: "text-sm font-medium" }}
       color="default"
+      isSelected={isSelected}
       thumbIcon={({ isSelected, className }) =>
         isSelected ? (
           <AlignStartVerticalIcon className={cn("p-1", className)} />
@@ -21,7 +22,6 @@ const TableLayoutSwitcher = ({ isSelected, onValueChange }: TableLayoutSwitcherP
           <AlignStartHorizontalIcon className={cn("p-1", className)} />
         )
       }
-      isSelected={isSelected}
       onValueChange={onValueChange}
     >
       {isSelected ? "Horizontal" : "Vertical"} mode
