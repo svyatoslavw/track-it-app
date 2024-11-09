@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="image/<generated>"
         />
       </head>
-      <body className={clsx("min-h-screen font-sans antialiased", fontSans.className)}>
+      <body className={clsx("min-h-screen font-sans antialiased", fontSans.variable)}>
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>{children}</Providers>
       </body>
     </html>
