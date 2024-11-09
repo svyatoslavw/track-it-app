@@ -1,3 +1,5 @@
 export { Footer } from "./Footer/Footer"
-export { HabitList } from "./Habit/HabitList"
+export { HabitCalendar } from "./Habit/HabitCalendar"
+export { HabitList } from "./HabitList/HabitList"
+export { HabitTable } from "./HabitTable/HabitTable"
 export { Sidebar } from "./Sidebar/Sidebar"

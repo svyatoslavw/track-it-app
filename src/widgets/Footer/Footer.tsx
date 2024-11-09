@@ -17,7 +17,7 @@ const socialLinks: { url: string; icon: LucideIcon }[] = [
 
 const Footer = () => {
   return (
-    <footer className="mb-2 flex w-full flex-col items-center justify-center gap-1 text-xs font-medium">
+    <footer className="mb-2 mt-8 flex w-full flex-col items-center justify-center gap-1 text-xs font-medium">
       <div className="flex justify-center gap-2">
         {socialLinks.map((link) => {
           return (

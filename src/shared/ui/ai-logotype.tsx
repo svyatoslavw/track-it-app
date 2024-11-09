@@ -39,10 +39,10 @@ const AiLogotype = ({ withTitle = false }: AiLogotypeProps) => {
               unoptimized
               alt={AI_NAME.FULL}
               className={cn(
-                "inline-block cursor-pointer select-none drop-shadow-[0_1px_2px_#62A4FA] md:hover:opacity-hover"
+                "inline-block cursor-pointer select-none drop-shadow-[0_1px_2px_#a328d4] md:hover:opacity-hover"
               )}
               height={12}
-              src="/images/ai-badge.webp"
+              src="/images/ai-badge2.webp"
               width={12}
             />
           </PopoverTrigger>

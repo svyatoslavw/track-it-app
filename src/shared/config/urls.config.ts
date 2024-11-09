@@ -13,8 +13,11 @@ export const PUBLIC_ROUTES = {
 
   home: () => "/",
   analytics: () => "/analytics",
+  habits: () => "/habits",
   categories: () => "/categories",
   settings: () => "/settings",
+  feedback: () => "/feedback",
+  issue: () => "/issue",
   auth: () => "/auth",
 
   sitemap: () => "/sitemap.xml"
@@ -23,6 +26,7 @@ export const ROUTES = {
   HOME: "/",
   ANALYTICS: "/analytics",
   HABITS: "/habits",
+  EDIT_HABIT: "/habits/edit",
   CATEGORIES: "/categories",
   SETTINGS: "/settings",
   FEEDBACK: "/feedback",

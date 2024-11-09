@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@nextui-org/button"
 import {
   Dropdown,
@@ -6,10 +8,13 @@ import {
   DropdownSection,
   DropdownTrigger
 } from "@nextui-org/dropdown"
-import { CopyIcon, EllipsisVertical, SquarePen } from "lucide-react"
+import { CopyIcon, EllipsisVertical, SquarePen, Trash2Icon } from "lucide-react"
+import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 
+import { ROUTES } from "@/shared/config"
 import { type IHabit, deleteHabit } from "@/shared/lib"
+import { AnimatedIcon } from "@/shared/ui"
 
 const DROPDOWN_KEYS = {
   COPY: "copy",
@@ -18,6 +23,7 @@ const DROPDOWN_KEYS = {
 }
 
 const HabitMenu = ({ habit }: { habit: IHabit }) => {
+  const router = useRouter()
   const onCopy = (name: string) => {
     navigator.clipboard.writeText(name)
 
@@ -25,7 +31,7 @@ const HabitMenu = ({ habit }: { habit: IHabit }) => {
   }
 
   const onEdit = (habitId: string) => {
-    console.log("@edit", habitId)
+    router.push(`${ROUTES.EDIT_HABIT}/${habitId}`)
   }
 
   const onDelete = async (habitId: string) => {
@@ -64,7 +70,11 @@ const HabitMenu = ({ habit }: { habit: IHabit }) => {
             key={DROPDOWN_KEYS.COPY}
             classNames={{ title: "font-bold" }}
             description="Copy the habit name to your clipboard"
-            startContent={<CopyIcon />}
+            startContent={
+              <AnimatedIcon>
+                <CopyIcon />
+              </AnimatedIcon>
+            }
           >
             <span className="font-bold">Copy</span>
           </DropdownItem>
@@ -72,7 +82,11 @@ const HabitMenu = ({ habit }: { habit: IHabit }) => {
             key={DROPDOWN_KEYS.EDIT}
             classNames={{ title: "font-bold" }}
             description="Edit your habit details"
-            startContent={<SquarePen />}
+            startContent={
+              <AnimatedIcon>
+                <SquarePen />
+              </AnimatedIcon>
+            }
           >
             <span className="font-bold">Edit</span>
           </DropdownItem>
@@ -84,7 +98,11 @@ const HabitMenu = ({ habit }: { habit: IHabit }) => {
             classNames={{ title: "font-bold" }}
             color="danger"
             description="Permanently delete your habit"
-            startContent={<SquarePen />}
+            startContent={
+              <AnimatedIcon>
+                <Trash2Icon />
+              </AnimatedIcon>
+            }
           >
             Delete
           </DropdownItem>

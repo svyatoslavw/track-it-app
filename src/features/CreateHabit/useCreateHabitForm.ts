@@ -71,8 +71,12 @@ export const useCreateHabitForm = () => {
     formik.setValues({ ...formik.values, category: e.target.value })
   }
 
+  const onSelectTime = (value: string) => {
+    formik.setValues({ ...formik.values, time: value })
+  }
+
   const onCreateHabit = async (values: ICreateHabitForm) => {
-    console.log("@values", values)
+    const toast = (await import("react-hot-toast")).default
 
     const res = await createHabit({
       title: values.title,
@@ -83,12 +87,14 @@ export const useCreateHabitForm = () => {
 
     if (res.status === RESPONSE_STATUS.SUCCESS) {
       formik.resetForm()
+      toast.success("Habit created.")
     }
   }
 
   return {
     formik,
     isLoading,
+    onSelectTime,
     onSelectDay,
     onSelectCategory
   }

@@ -1,7 +1,7 @@
 import { cn } from "../lib"
 
 export const PageTitle = ({ children }: { children: React.ReactNode }) => (
-  <h1 className="py-4 text-center text-2xl font-bold">{children}</h1>
+  <h1 className="py-4 text-center text-2xl font-bold capitalize">{children}</h1>
 )
 
 export const PageWrapper = ({

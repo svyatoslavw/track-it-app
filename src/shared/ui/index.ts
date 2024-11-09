@@ -1,5 +1,6 @@
 export { default as CategoryItem } from "../../features/UpdateCategory/UpdateCategoryItem"
 export { AiLogotype } from "./ai-logotype"
+export { AnimatedIcon } from "./animated-icon"
 export { default as EmojiPicker } from "./emoji-picker"
 export { CoffeeIcon } from "./icons/CoffeeIcon"
 export { DiscordIcon } from "./icons/DiscordIcon"

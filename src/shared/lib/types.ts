@@ -35,8 +35,8 @@ export const enum EnumUserRoles {
 
 interface CommonModel {
   id: string
-  createdAt: string
-  updatedAt: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface IUser extends CommonModel {
@@ -58,4 +58,10 @@ export interface ICreateHabit {
   day: string
   time: string
   category: string
+}
+
+export interface IDay {
+  emoji: string
+  day: string
+  color: string
 }

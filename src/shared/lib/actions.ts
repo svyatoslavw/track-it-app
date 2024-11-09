@@ -84,7 +84,7 @@ const habitCategories: ICategory[] = [
   }
 ]
 
-const days: DayWithEmoji[] = [
+const days: Omit<DayWithEmoji, "color">[] = [
   { emoji: "☀️", day: "Sunday" },
   { emoji: "🌞", day: "Monday" },
   { emoji: "🌕", day: "Tuesday" },
@@ -102,9 +102,9 @@ export async function getHabitTimeAI(userPrompt: string): Promise<string> {
   try {
     // const prompt = `${userPrompt}. Provide a numerical estimate of the cost in ${currency}, disregarding real-time price fluctuations. Omit any decimal points, commas, or other symbols.`
     const prompt =
-      `${userPrompt}. Specify the time for performing this action in the format "HH:mm" (for example, 11:45 or 04:34). ` +
-      "Choose the best time to perform this action in real life, but if it is impossible to determine an exact time, select it at your own discretion. " +
-      "Only display the time, without any additional text."
+      `${userPrompt}. Specify the time for performing this action in the format "HH:mm" (e.g., 11:45 or 04:34). ` +
+      "Choose the optimal time for this action in real life. If an exact time cannot be determined, select one at your discretion. " +
+      "Display only the time, with no additional text."
 
     return CompletionAIModel(prompt)
   } catch (err) {
@@ -144,8 +144,8 @@ export async function getHabitDayAI(userPrompt: string): Promise<string> {
     const daysStr = days.flatMap((day) => day.day).join(", ")
 
     const prompt =
-      `Given a list of days: ${daysStr} - Select the best day to complete your habit - ${userPrompt} with one word from the list. ` +
-      "Display only the day, without any additional text. Even if you cannot determine the time, then withdraw it randomly."
+      `Given a list of days: ${daysStr}. Select the best day to implement the habit: ${userPrompt} ` +
+      "Print only the selected day in one word from the list. If it is not possible to choose a suitable day, select a random one from the list. Display only the day, without any additional text. No extra text."
 
     return CompletionAIModel(prompt)
   } catch (err) {
@@ -180,6 +180,28 @@ export async function createHabit(data: ICreateHabit) {
   return { status: RESPONSE_STATUS.SUCCESS, data: newHabit }
 }
 
+export async function updateHabit(id: string, data: ICreateHabit) {
+  const session = await auth()
+
+  if (!session) {
+    throw new Error("Session is required.")
+  }
+
+  const updatedHabit = await prisma.habit.update({
+    where: { id, AND: { user: { email: session.user.email } } },
+    data: {
+      title: data.title,
+      time: data.time,
+      category: data.category,
+      day: data.day
+    }
+  })
+
+  revalidatePath(ROUTES.HOME, "page")
+
+  return { status: RESPONSE_STATUS.SUCCESS, data: updatedHabit }
+}
+
 export async function deleteHabit(id: string) {
   const session = await auth()
 
@@ -191,9 +213,39 @@ export async function deleteHabit(id: string) {
     where: { id }
   })
 
-  revalidatePath(ROUTES.HOME)
+  revalidatePath(ROUTES.HOME, "page")
 
   return { status: RESPONSE_STATUS.SUCCESS, data: deletedHabit }
+}
+
+export async function getHabitById(id: string) {
+  const session = await auth()
+
+  if (!session) {
+    throw new Error("Session is required.")
+  }
+
+  const habit = prisma.habit.findUnique({
+    select: {
+      id: true,
+      updatedAt: true,
+      createdAt: true,
+      category: true,
+      day: true,
+      title: true,
+      time: true,
+      user: true
+    },
+    where: {
+      id,
+      AND: { user: { email: session.user.email } }
+    }
+  })
+
+  if (!habit) {
+    throw new Error("Habit not found.")
+  }
+  return habit
 }
 
 export async function getHabits() {
@@ -207,6 +259,26 @@ export async function getHabits() {
     where: {
       user: { email: session.user.email }
     }
+  })
+
+  return habits
+}
+
+export async function getFewHabits() {
+  const session = await auth()
+
+  if (!session) {
+    throw new Error("Session is required.")
+  }
+
+  const habits = prisma.habit.findMany({
+    where: {
+      user: { email: session.user.email }
+    },
+    orderBy: {
+      createdAt: "desc"
+    },
+    take: 3
   })
 
   return habits

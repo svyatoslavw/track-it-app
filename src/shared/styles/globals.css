@@ -27,7 +27,7 @@
 }
 
 #sidebar-toggle:checked ~ .label > .hamburger-menu .bar1 {
-  transform: rotate(-45deg) translate(-3px, 3px);
+  transform: rotate(-45deg) translate(-3.5px, 3px);
 }
 
 #sidebar-toggle:checked ~ .label > .hamburger-menu .bar2 {
