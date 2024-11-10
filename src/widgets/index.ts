@@ -1,3 +1,5 @@
+export { BarHabitsChart } from "./Analytics/BarHabitsChart"
+export { RadarHabitChart } from "./Analytics/RadarHabitChart"
 export { Footer } from "./Footer/Footer"
 export { HabitCalendar } from "./Habit/HabitCalendar"
 export { HabitList } from "./HabitList/HabitList"

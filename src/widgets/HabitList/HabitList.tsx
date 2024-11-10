@@ -23,7 +23,9 @@ const HabitList = ({ habits }: { habits: IHabit[] }) => {
           ))}
         </AnimatePresence>
       ) : (
-        <p>Create your first habit</p>
+        <p className="text-center font-semibold underline underline-offset-2">
+          Create your first habit
+        </p>
       )}
       <Link
         className="mt-2 text-center font-bold text-primary-600 underline-offset-2 hover:underline lg:text-sm"

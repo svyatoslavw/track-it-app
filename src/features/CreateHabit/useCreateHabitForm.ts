@@ -31,6 +31,13 @@ export const useCreateHabitForm = () => {
     initialValues: { ...INITIAL_STATE },
     onSubmit: async (values) => {
       await onCreateHabit(values)
+    },
+    validate(values) {
+      if (!values.title.trim()) {
+        return {
+          title: "Required"
+        }
+      }
     }
   })
 

@@ -1,7 +1,5 @@
+import { AnalyticsPage } from "./AnalyticsPage"
+
 export default function PricingPage() {
-  return (
-    <div>
-      <h1>Analytics</h1>
-    </div>
-  )
+  return <AnalyticsPage />
 }

@@ -8,8 +8,7 @@ import { RESPONSE_STATUS } from "../constans"
 
 import { CompletionAIModel } from "./ai"
 import { prisma } from "./db"
-import { ICategory, ICreateHabit } from "./types"
-import { DayWithEmoji } from "@/app/(default)/home"
+import { ICategory, ICreateHabit, IDay, IHabit, TypeHabitStatus } from "./types"
 import { auth } from "@/auth"
 
 const habitCategories: ICategory[] = [
@@ -84,7 +83,7 @@ const habitCategories: ICategory[] = [
   }
 ]
 
-const days: Omit<DayWithEmoji, "color">[] = [
+const days: Omit<IDay, "color">[] = [
   { emoji: "☀️", day: "Sunday" },
   { emoji: "🌞", day: "Monday" },
   { emoji: "🌕", day: "Tuesday" },
@@ -161,11 +160,7 @@ export async function createHabit(data: ICreateHabit) {
     throw new Error("Session is required.")
   }
 
-  if (!session.user.email) {
-    throw new Error("User email is required.")
-  }
-
-  const newHabit = prisma.habit.create({
+  const newHabit = await prisma.habit.create({
     data: {
       title: data.title,
       time: data.time,
@@ -197,7 +192,7 @@ export async function updateHabit(id: string, data: ICreateHabit) {
     }
   })
 
-  revalidatePath(ROUTES.HOME, "page")
+  revalidatePath(ROUTES.HOME)
 
   return { status: RESPONSE_STATUS.SUCCESS, data: updatedHabit }
 }
@@ -283,4 +278,38 @@ export async function getFewHabits() {
   })
 
   return habits
+}
+
+export default async function updateHabitStatus(id: string, action: TypeHabitStatus) {
+  const session = await auth()
+
+  if (!session) {
+    throw new Error("Session is required.")
+  }
+
+  const habit = await prisma.habit.findUnique({
+    where: { id }
+  })
+
+  if (!habit) {
+    throw new Error("Habit not found.")
+  }
+
+  const currentDate = new Date()
+
+  if (habit.lastCheckedAt < new Date(currentDate.setDate(currentDate.getDate() + 1))) {
+    throw new Error("Habit already checked today.")
+  }
+
+  const data: Partial<IHabit> = {
+    completedTimes: action === "complete" ? habit.completedTimes + 1 : habit.completedTimes,
+    incompletedTimes: action === "incomplete" ? habit.incompletedTimes + 1 : habit.incompletedTimes,
+    lastCheckedAt: new Date()
+  }
+
+  const updatedHabit = await prisma.habit.update({ where: { id }, data })
+
+  revalidatePath(ROUTES.HABITS)
+
+  return { status: RESPONSE_STATUS.SUCCESS, data: updatedHabit }
 }

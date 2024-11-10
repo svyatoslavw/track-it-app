@@ -7,8 +7,8 @@ type TProps = {
 }
 const AuthButton = ({ title, ...attrs }: Omit<ButtonProps, "title"> & TProps) => {
   return (
-    <Button color="secondary" {...attrs}>
-      {title}
+    <Button variant="shadow" color="secondary" {...attrs}>
+      <span className="font-medium">{title}</span>
     </Button>
   )
 }

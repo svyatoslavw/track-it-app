@@ -1,3 +1,5 @@
+"use client"
+
 import { Time } from "@internationalized/date"
 import { Badge } from "@nextui-org/badge"
 import { Button } from "@nextui-org/button"

@@ -47,6 +47,9 @@ export interface IUser extends CommonModel {
 }
 
 export interface IHabit extends CommonModel {
+  lastCheckedAt: Date
+  completedTimes: number
+  incompletedTimes: number
   title: string
   day: string
   time: string
@@ -60,8 +63,19 @@ export interface ICreateHabit {
   category: string
 }
 
+export type TypeDay =
+  | "Sunday"
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+
+export type TypeHabitStatus = "complete" | "incomplete"
+
 export interface IDay {
   emoji: string
-  day: string
+  day: TypeDay
   color: string
 }

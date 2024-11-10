@@ -17,8 +17,8 @@ model User {
   emailVerified DateTime?
   password      String?
   role          UserRole  @default(USER)
-  habits        Habit[]
   accounts      Account[]
+  habits        Habit[]
   sessions      Session[]
 
   @@map("users")
@@ -65,15 +65,23 @@ model VerificationToken {
 }
 
 model Habit {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  title     String
-  day       String
-  time      String
-  category  String
-  userId    String   @map("user_id")
-  user      User     @relation(fields: [userId], references: [id])
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  lastCheckedAt DateTime @default(now()) @map("last_checked_at")
+
+  title    String
+  day      String
+  time     String
+  category String
+
+  completedTimes   Int    @default(0) @map("completed_times")
+  incompletedTimes Int    @default(0) @map("incompleted_times")
+  userId           String @map("user_id")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("habits")
 }
 
 enum UserRole {
