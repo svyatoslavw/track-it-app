@@ -221,16 +221,6 @@ export async function getHabitById(id: string) {
   }
 
   const habit = prisma.habit.findUnique({
-    select: {
-      id: true,
-      updatedAt: true,
-      createdAt: true,
-      category: true,
-      day: true,
-      title: true,
-      time: true,
-      user: true
-    },
     where: {
       id,
       AND: { user: { email: session.user.email } }
@@ -251,7 +241,7 @@ export async function getHabits() {
     throw new Error("Session is required.")
   }
 
-  const habits = prisma.habit.findMany({
+  const habits = await prisma.habit.findMany({
     where: {
       user: { email: session.user.email }
     }
@@ -295,11 +285,11 @@ export default async function updateHabitStatus(id: string, action: TypeHabitSta
     throw new Error("Habit not found.")
   }
 
-  const currentDate = new Date()
+  // const currentDate = new Date()
 
-  if (habit.lastCheckedAt < new Date(currentDate.setDate(currentDate.getDate() + 1))) {
-    throw new Error("Habit already checked today.")
-  }
+  // if (habit.lastCheckedAt < new Date(currentDate.setDate(currentDate.getDate() + 1))) {
+  //   throw new Error("Habit already checked today.")
+  // }
 
   const data: Partial<IHabit> = {
     completedTimes: action === "complete" ? habit.completedTimes + 1 : habit.completedTimes,

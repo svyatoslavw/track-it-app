@@ -3,11 +3,11 @@
 import { AnimatePresence } from "framer-motion"
 import Link from "next/link"
 
+import { useCategoryStore } from "@/entities/category"
 import { HabitCard } from "@/entities/habit"
 import { HabitMenu } from "@/features"
 import { ROUTES } from "@/shared/config"
 import type { IHabit } from "@/shared/lib"
-import { useCategoryStore } from "@/shared/store"
 
 const HabitList = ({ habits }: { habits: IHabit[] }) => {
   const { categories } = useCategoryStore()

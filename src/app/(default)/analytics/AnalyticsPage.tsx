@@ -1,34 +1,19 @@
 "use client"
 
-import { type ChartConfig } from "@/shared/ui"
-import { BarHabitsChart, RadarHabitChart } from "@/widgets"
+import { IHabit } from "@/shared/lib"
+import { InfoMessage, PageTitle, PageWrapper } from "@/shared/ui"
+import { RadarHabitChart } from "@/widgets"
 
-const chartData = [
-  { month: "Sunday", completed: 186, incompleted: 80 },
-  { month: "Monday", completed: 305, incompleted: 200 },
-  { month: "Tuesday", completed: 200, incompleted: 100 },
-  { month: "Wednesday", completed: 100, incompleted: 200 },
-  { month: "Thursday", completed: 200, incompleted: 100 },
-  { month: "Friday", completed: 100, incompleted: 200 },
-  { month: "Saturday", completed: 200, incompleted: 100 }
-]
-const chartConfig = {
-  completed: {
-    label: "completed",
-    color: "#7c3aed"
-  },
-  incompleted: {
-    label: "incompleted",
-    color: "#9333ea"
-  }
-} satisfies ChartConfig
-
-const AnalyticsPage = () => {
+const AnalyticsPage = ({ habits }: { habits: IHabit[] }) => {
   return (
-    <div className="grid min-h-full grid-cols-2 place-items-center gap-6">
-      <RadarHabitChart />
-      <BarHabitsChart />
-    </div>
+    <PageWrapper size="full">
+      <PageTitle>Analytics</PageTitle>
+      <RadarHabitChart habits={habits} />
+      <div className="text-center">
+        <InfoMessage text="All-time stats for your habits." />
+        <InfoMessage asterisk="double" text="Graph is visible when all the days are used." />
+      </div>
+    </PageWrapper>
   )
 }
 

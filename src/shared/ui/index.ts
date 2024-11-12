@@ -1,4 +1,4 @@
-export { default as CategoryItem } from "../../features/UpdateCategory/UpdateCategoryItem"
+export { default as CategoryItem } from "../../features/UpdateCategory/UpdateSubcategoryForm"
 export { AiLogotype } from "./ai-logotype"
 export { AnimatedIcon } from "./animated-icon"
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card"

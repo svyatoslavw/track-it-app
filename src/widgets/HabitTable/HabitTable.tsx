@@ -4,12 +4,12 @@ import { Spinner } from "@nextui-org/spinner"
 
 import { TableDayColumn } from "./TableDayColumn"
 import { TableLayoutSwitcher } from "./TableLayoutSwitcher"
+import { useCategoryStore } from "@/entities/category"
 import { useGroupedHabits, usePersistedState } from "@/entities/habit"
 import { days } from "@/shared/constans"
 import { useFakeLoading } from "@/shared/hooks"
 import { type IHabit, TypeHabitStatus, cn } from "@/shared/lib"
 import updateHabitStatus from "@/shared/lib/actions"
-import { useCategoryStore } from "@/shared/store"
 
 const ERROR_MESSAGE = "Something went wrong."
 const COMPLETED_MESSAGE = "Habit completed."
@@ -17,10 +17,11 @@ const INCOMPLETED_MESSAGE = "Habit incompleted."
 
 const HabitTable = ({ habits }: { habits: IHabit[] }) => {
   const { categories } = useCategoryStore()
+
   const [isLoading] = useFakeLoading(true, 400)
   const [isSelected, setIsSelected] = usePersistedState("habitSelected", false)
+
   const groupedHabits = useGroupedHabits(habits)
-  const getShortDayName = (dayName: string) => dayName.substring(0, 3)
 
   const onCheckHabit = async (id: string, status: TypeHabitStatus) => {
     const toast = (await import("react-hot-toast")).default
@@ -46,7 +47,6 @@ const HabitTable = ({ habits }: { habits: IHabit[] }) => {
               habits={groupedHabits[day.day] || []}
               isSelected={isSelected}
               onButtonAction={onCheckHabit}
-              getShortDayName={getShortDayName}
             />
           ))
         ) : (

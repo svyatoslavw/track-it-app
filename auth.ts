@@ -13,7 +13,29 @@ const authOptions = NextAuth({
   secret: process.env.AUTH_SECRET,
   trustHost: true,
   debug: process.env.NODE_ENV !== "production" ? true : false,
-
+  cookies: {
+    sessionToken: {
+      name: "rndmtracker.session-token"
+    },
+    csrfToken: {
+      name: "rndmtracker.csrf-token"
+    },
+    webauthnChallenge: {
+      name: "rndmtracker.webauthn"
+    },
+    state: {
+      name: "rndmtracker.auth-state"
+    },
+    nonce: {
+      name: "rndmtracker.auth-nonce"
+    },
+    callbackUrl: {
+      name: "rndmtracker.callback-url"
+    },
+    pkceCodeVerifier: {
+      name: "rndmtracker.pkce-code-verifier"
+    }
+  },
   callbacks: {
     async signIn({ user }) {
       try {

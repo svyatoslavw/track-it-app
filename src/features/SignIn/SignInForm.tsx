@@ -67,7 +67,7 @@ const SignInForm = () => {
   }
 
   return (
-    <div className="flex min-h-screen flex-col justify-between p-4 md:p-8">
+    <div className="flex min-h-screen flex-col justify-between bg-foreground-200 p-4 md:p-8">
       <div className="flex w-full justify-end">
         <Button color="secondary" variant="shadow" size="sm">
           Install
@@ -79,7 +79,7 @@ const SignInForm = () => {
         </div>
         <h1 className="mb-1 text-2xl font-bold md:text-3xl">Welcome to {APP_NAME.FULL}</h1>
         <p className="text-default-500">Start tracking your daily habits.</p>
-        <div className="my-4 h-[1px] w-full rounded-full bg-foreground-200 md:w-1/2" />
+        <div className="my-4 h-px w-full rounded-full bg-foreground-300 md:w-1/2" />
         <p className="mb-4">
           Start{" "}
           <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">

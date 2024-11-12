@@ -1,8 +1,8 @@
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
 
-import { categories } from "../constans"
-import { ICategory, ICategoryItem } from "../lib"
+import { categories } from "../../../shared/constans"
+import { ICategory, ICategoryItem } from "../../../shared/lib"
 
 type TBearStoreState = {
   categories: ICategory[]

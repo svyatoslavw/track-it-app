@@ -1,7 +1,6 @@
 "use client"
 
 import { Time } from "@internationalized/date"
-import { Badge } from "@nextui-org/badge"
 import { Button } from "@nextui-org/button"
 import { TimeInput } from "@nextui-org/date-input"
 import { Input } from "@nextui-org/input"
@@ -35,31 +34,21 @@ const UpdateHabitForm = ({ habit }: { habit: IHabit }) => {
         }
         endContent={
           <div className="flex w-[154px] items-center justify-center md:w-28">
-            <Badge
-              className="w-80"
-              classNames={{
-                badge: "right-0 border-0 bg-transparent cursor-pointer md:hover:opacity-hover"
-              }}
-              content={<AiLogotype />}
-            >
-              <TimeInput
-                aria-label="Time"
-                className="w-24"
-                defaultValue={new Time(11, 45)}
-                isDisabled={isLoading}
-                name="time"
-                startContent={
-                  <Clock10Icon
-                    className="pointer-events-none flex-shrink-0 text-sm text-default-400"
-                    size={16}
-                  />
-                }
-                value={
-                  new Time(+formik.values.time.split(":")[0], +formik.values.time.split(":")[1])
-                }
-                onChange={(time) => onSelectTime(`${time.hour}:${time.minute}`)}
-              />
-            </Badge>
+            <TimeInput
+              aria-label="Time"
+              className="w-24"
+              defaultValue={new Time(11, 45)}
+              isDisabled={isLoading}
+              name="time"
+              startContent={
+                <Clock10Icon
+                  className="pointer-events-none flex-shrink-0 text-sm text-default-400"
+                  size={16}
+                />
+              }
+              value={new Time(+formik.values.time.split(":")[0], +formik.values.time.split(":")[1])}
+              onChange={(time) => onSelectTime(`${time.hour}:${time.minute}`)}
+            />
           </div>
         }
         errorMessage={formik.errors.title}

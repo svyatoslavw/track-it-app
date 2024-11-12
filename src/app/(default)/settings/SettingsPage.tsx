@@ -3,7 +3,7 @@
 import { Button } from "@nextui-org/button"
 import { signOut } from "next-auth/react"
 
-import { useCategoryStore } from "@/shared/store"
+import { useCategoryStore } from "@/entities/category"
 
 const SettingsPage = () => {
   const { reset } = useCategoryStore()

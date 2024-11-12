@@ -18,6 +18,7 @@ export interface ICategory {
 
 export type TAuthProvider = "github" | "google" | "spotify"
 export type TAuthProvidersLoading = Record<TAuthProvider, boolean>
+
 export type TIconSvg = React.ForwardRefExoticComponent<
   React.SVGProps<SVGSVGElement> & React.RefAttributes<SVGSVGElement>
 >
@@ -78,4 +79,10 @@ export interface IDay {
   emoji: string
   day: TypeDay
   color: string
+}
+
+export interface IChartHabit {
+  day: string
+  completed: number
+  incompleted: number
 }

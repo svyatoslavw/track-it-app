@@ -1,33 +1,31 @@
 "use client"
 
+import { TicketCheck, TicketX } from "lucide-react"
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
 
+import { normalizeChartData } from "@/entities/habit"
+import { IHabit } from "@/shared/lib"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/shared/ui"
 
-const chartData = [
-  { month: "Sunday", completed: 186, incompleted: 80 },
-  { month: "Monday", completed: 305, incompleted: 200 },
-  { month: "Tuesday", completed: 200, incompleted: 100 },
-  { month: "Wednesday", completed: 100, incompleted: 200 },
-  { month: "Thursday", completed: 200, incompleted: 100 },
-  { month: "Friday", completed: 100, incompleted: 200 },
-  { month: "Saturday", completed: 200, incompleted: 100 }
-]
 const chartConfig = {
   completed: {
     label: "completed",
-    color: "#7c3aed"
+    color: "#7c3aed",
+    icon: TicketCheck
   },
   incompleted: {
     label: "incompleted",
-    color: "#9333ea"
+    color: "#9333ea",
+    icon: TicketX
   }
 } satisfies ChartConfig
 
-const RadarHabitChart = () => {
+const RadarHabitChart = ({ habits }: { habits: IHabit[] }) => {
+  const data = normalizeChartData(habits)
+
   return (
-    <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[85vh]">
-      <RadarChart data={chartData}>
+    <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-screen">
+      <RadarChart data={data}>
         <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
         <PolarAngleAxis dataKey="month" />
         <PolarGrid />

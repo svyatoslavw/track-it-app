@@ -1,7 +1,7 @@
 "use client"
 
-import { UpdateCategoryHeading } from "@/features"
-import { useCategoryStore } from "@/shared/store"
+import { useCategoryStore } from "@/entities/category"
+import { UpdateCategoryForm } from "@/features"
 import { PageWrapper } from "@/shared/ui"
 
 const CategoryPage = () => {
@@ -10,7 +10,7 @@ const CategoryPage = () => {
   return (
     <PageWrapper>
       {categories.map((category) => (
-        <UpdateCategoryHeading key={category.subject} category={category} />
+        <UpdateCategoryForm key={category.subject} category={category} />
       ))}
     </PageWrapper>
   )

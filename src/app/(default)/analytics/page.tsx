@@ -1,5 +1,8 @@
 import { AnalyticsPage } from "./AnalyticsPage"
+import { getHabits } from "@/shared/lib"
 
-export default function PricingPage() {
-  return <AnalyticsPage />
+export default async function PricingPage() {
+  const habits = await getHabits()
+
+  return <AnalyticsPage habits={habits} />
 }
