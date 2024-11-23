@@ -4,6 +4,10 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number
 }
 
+type TypedPick<T, K extends keyof T> = {
+  [P in K]: T[P]
+}
+
 export interface ICategoryItem {
   id: string
   emoji: string
@@ -57,12 +61,7 @@ export interface IHabit extends CommonModel {
   category: string
 }
 
-export interface ICreateHabit {
-  title: string
-  day: string
-  time: string
-  category: string
-}
+export type ICreateHabit = TypedPick<IHabit, "title" | "day" | "time" | "category">
 
 export type TypeDay =
   | "Sunday"
@@ -82,7 +81,7 @@ export interface IDay {
 }
 
 export interface IChartHabit {
-  day: string
+  day: TypeDay
   completed: number
   incompleted: number
 }

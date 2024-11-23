@@ -56,3 +56,7 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+.fc-day-today {
+  background-color: #e0e0e0 !important;
+}

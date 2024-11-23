@@ -2,6 +2,7 @@
 
 import { useFormik } from "formik"
 import { useCallback, useEffect, useState } from "react"
+import toast from "react-hot-toast"
 
 import { RESPONSE_STATUS } from "@/shared/constans"
 import {
@@ -83,7 +84,7 @@ export const useCreateHabitForm = () => {
   }
 
   const onCreateHabit = async (values: ICreateHabitForm) => {
-    const toast = (await import("react-hot-toast")).default
+    // const toast = (await import("react-hot-toast")).default
 
     const res = await createHabit({
       title: values.title,
