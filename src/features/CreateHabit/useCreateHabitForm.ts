@@ -4,7 +4,7 @@ import { useFormik } from "formik"
 import { useCallback, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 
-import { RESPONSE_STATUS } from "@/shared/constans"
+import { RESPONSE_STATUS, days } from "@/shared/constans"
 import {
   createHabit,
   debounce,
@@ -83,14 +83,27 @@ export const useCreateHabitForm = () => {
     formik.setValues({ ...formik.values, time: value })
   }
 
+  const sortDays = (a: string, b: string) => {
+    const daysArr = days.map((day) => day.day.toString())
+
+    return daysArr.indexOf(a) - daysArr.indexOf(b)
+  }
+
   const onCreateHabit = async (values: ICreateHabitForm) => {
     // const toast = (await import("react-hot-toast")).default
+
+    console.log("@values", {
+      title: values.title,
+      time: values.time,
+      category: values.category,
+      day: Array.from(values.day).sort(sortDays).join(",")
+    })
 
     const res = await createHabit({
       title: values.title,
       time: values.time,
       category: values.category,
-      day: Array.from(values.day).join(",")
+      day: Array.from(values.day).sort(sortDays).join(",")
     })
 
     if (res.status === RESPONSE_STATUS.SUCCESS) {

@@ -1,4 +1,5 @@
 import { useFormik } from "formik"
+import toast from "react-hot-toast"
 
 import { RESPONSE_STATUS } from "@/shared/constans"
 import { IHabit, updateHabit } from "@/shared/lib"
@@ -39,7 +40,7 @@ export const useUpdateHabitForm = (habit: IHabit) => {
   }
 
   const onCreateHabit = async (values: IUpdateHabitForm) => {
-    const toast = (await import("react-hot-toast")).default
+    // const toast = (await import("react-hot-toast")).default
 
     const res = await updateHabit(habit.id, {
       title: values.title,

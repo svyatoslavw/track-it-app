@@ -1,4 +1,6 @@
 export { useGroupedHabits } from "./hooks/useGroupedHabits"
 export { usePersistedState } from "./hooks/usePersistedState"
-export { normalizeChartData } from "./model/normalizeChartData"
+export { getDateForWeekday, getWeekdayName } from "./model/date-helpers"
+export { normalizeCalendarHabits } from "./model/normalize-calendar-habits"
+export { normalizeChartHabits } from "./model/normalize-chart-data"
 export { HabitCard } from "./ui/HabitCard"

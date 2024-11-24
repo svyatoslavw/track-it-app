@@ -8,7 +8,7 @@ const HabitPage = ({ habits }: { habits: IHabit[] }) => {
       <PageTitle>Habits</PageTitle>
       {/* <HabitCalendar habits={habits} /> */}
       {/* <HabitTable habits={habits} /> */}
-      <CalendarWithHabits />
+      <CalendarWithHabits habits={habits} />
     </PageWrapper>
   )
 }

@@ -3,7 +3,7 @@
 import { TicketCheck, TicketX } from "lucide-react"
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
 
-import { normalizeChartData } from "@/entities/habit"
+import { normalizeChartHabits } from "@/entities/habit"
 import { IHabit } from "@/shared/lib"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/shared/ui"
 
@@ -21,7 +21,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 const RadarHabitChart = ({ habits }: { habits: IHabit[] }) => {
-  const data = normalizeChartData(habits)
+  const data = normalizeChartHabits(habits)
 
   return (
     <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-screen">

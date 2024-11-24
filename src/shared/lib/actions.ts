@@ -99,7 +99,6 @@ export async function getHabitTimeAI(userPrompt: string): Promise<string> {
   }
 
   try {
-    // const prompt = `${userPrompt}. Provide a numerical estimate of the cost in ${currency}, disregarding real-time price fluctuations. Omit any decimal points, commas, or other symbols.`
     const prompt =
       `${userPrompt}. Specify the time for performing this action in the format "HH:mm" (e.g., 11:45 or 04:34). ` +
       "Choose the optimal time for this action in real life. If an exact time cannot be determined, select one at your discretion. " +
@@ -220,7 +219,7 @@ export async function getHabitById(id: string) {
     throw new Error("Session is required.")
   }
 
-  const habit = prisma.habit.findUnique({
+  const habit = await prisma.habit.findUnique({
     where: {
       id,
       AND: { user: { email: session.user.email } }
@@ -257,7 +256,7 @@ export async function getFewHabits() {
     throw new Error("Session is required.")
   }
 
-  const habits = prisma.habit.findMany({
+  const habits = await prisma.habit.findMany({
     where: {
       user: { email: session.user.email }
     },
@@ -300,6 +299,26 @@ export default async function updateHabitStatus(id: string, action: TypeHabitSta
   const updatedHabit = await prisma.habit.update({ where: { id }, data })
 
   revalidatePath(ROUTES.HABITS)
+
+  return { status: RESPONSE_STATUS.SUCCESS, data: updatedHabit }
+}
+
+export async function updateHabitDay(id: string, day: string) {
+  const session = await auth()
+
+  if (!session) {
+    throw new Error("Session is required.")
+  }
+
+  const habit = await prisma.habit.findUnique({ where: { id } })
+
+  if (!habit) {
+    throw new Error("Habit not found.")
+  }
+
+  const updatedHabit = await prisma.habit.update({ where: { id: habit.id }, data: { day } })
+
+  revalidatePath(ROUTES.HABITS, "page")
 
   return { status: RESPONSE_STATUS.SUCCESS, data: updatedHabit }
 }
