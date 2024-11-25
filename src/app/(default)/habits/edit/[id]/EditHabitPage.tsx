@@ -1,8 +1,8 @@
 import { UpdateHabitForm } from "@/features"
-import type { IHabit } from "@/shared/lib"
+import type { HabitEntity } from "@/shared/lib"
 import { PageTitle, PageWrapper } from "@/shared/ui"
 
-const EditHabitPage = ({ habit }: { habit: IHabit }) => {
+const EditHabitPage = ({ habit }: { habit: HabitEntity }) => {
   return (
     <PageWrapper>
       <PageTitle>Edit Your Habit</PageTitle>

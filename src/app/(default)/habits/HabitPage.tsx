@@ -1,8 +1,8 @@
 import { CalendarWithHabits } from "./CalendarTest"
-import { type IHabit } from "@/shared/lib"
+import { type HabitEntity } from "@/shared/lib"
 import { PageTitle, PageWrapper } from "@/shared/ui/wrapper"
 
-const HabitPage = ({ habits }: { habits: IHabit[] }) => {
+const HabitPage = ({ habits }: { habits: HabitEntity[] }) => {
   return (
     <PageWrapper size="full">
       <PageTitle>Habits</PageTitle>

@@ -16,7 +16,7 @@ import { usePathname } from "next/navigation"
 
 import { UserInfo } from "@/entities/user"
 import { ROUTES, SIDEBAR_TITlES } from "@/shared/config"
-import { IUser } from "@/shared/lib"
+import { UserEntity } from "@/shared/lib"
 import { Logotype } from "@/shared/ui"
 
 interface SidebarLink {
@@ -66,7 +66,7 @@ const bottomNavLinks: SidebarLink[] = [
   }
 ]
 
-const Sidebar = ({ user }: { user: IUser | undefined }) => {
+const Sidebar = ({ user }: { user: UserEntity | undefined }) => {
   const pathname = usePathname()
 
   return (

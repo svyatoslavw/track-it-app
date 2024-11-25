@@ -6,10 +6,10 @@ import { cache } from "react"
 import { ROUTES } from "../config"
 import { RESPONSE_STATUS } from "../constans"
 
+import { auth } from "@/auth"
 import { CompletionAIModel } from "./ai"
 import { prisma } from "./db"
-import { ICategory, ICreateHabit, IDay, IHabit, TypeHabitStatus } from "./types"
-import { auth } from "@/auth"
+import { HabitEntity, HabitStatus, ICategory, ICreateHabit, IDay } from "./types"
 
 const habitCategories: ICategory[] = [
   {
@@ -269,7 +269,7 @@ export async function getFewHabits() {
   return habits
 }
 
-export default async function updateHabitStatus(id: string, action: TypeHabitStatus) {
+export default async function updateHabitStatus(id: string, action: HabitStatus) {
   const session = await auth()
 
   if (!session) {
@@ -290,7 +290,7 @@ export default async function updateHabitStatus(id: string, action: TypeHabitSta
   //   throw new Error("Habit already checked today.")
   // }
 
-  const data: Partial<IHabit> = {
+  const data: Partial<HabitEntity> = {
     completedTimes: action === "complete" ? habit.completedTimes + 1 : habit.completedTimes,
     incompletedTimes: action === "incomplete" ? habit.incompletedTimes + 1 : habit.incompletedTimes,
     lastCheckedAt: new Date()

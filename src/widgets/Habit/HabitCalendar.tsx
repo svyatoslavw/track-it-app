@@ -7,9 +7,9 @@ import { Radio, RadioGroup } from "@nextui-org/radio"
 import { useLocale } from "@react-aria/i18n"
 import React from "react"
 
-import { type IHabit, cn } from "@/shared/lib"
+import { type HabitEntity, cn } from "@/shared/lib"
 
-const HabitCalendar = ({ habits }: { habits: IHabit[] }) => {
+const HabitCalendar = ({ habits }: { habits: HabitEntity[] }) => {
   let defaultDate = today(getLocalTimeZone())
   let [value, setValue] = React.useState(defaultDate)
   let { locale } = useLocale()

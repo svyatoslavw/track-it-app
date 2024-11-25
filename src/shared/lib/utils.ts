@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge"
 
 import { days } from "../constans"
 
-import { ICategory, IHabit } from "./types"
+import { HabitEntity, ICategory } from "./types"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -21,7 +21,7 @@ export function debounce<T extends (...args: any[]) => void>(func: T, ms: number
   }
 }
 
-export function getFormattedHabitDay(habit: IHabit) {
+export function getFormattedHabitDay(habit: HabitEntity) {
   const items = habit.day.split(",").map((day) => day.trim())
   const emojis = items
     .map((day) => {
@@ -35,7 +35,7 @@ export function getFormattedHabitDay(habit: IHabit) {
   return emojis
 }
 
-export function getFormattedHabitCategory(habit: IHabit, categories: ICategory[]) {
+export function getFormattedHabitCategory(habit: HabitEntity, categories: ICategory[]) {
   const categoryItem = categories.flatMap((c) => c.items).find((i) => i.name === habit.category)
 
   return categoryItem ? `${categoryItem.emoji} ${categoryItem.name}` : habit.category

@@ -1,7 +1,7 @@
 import { days } from "@/shared/constans"
-import type { IChartHabit, IHabit } from "@/shared/lib"
+import type { HabitEntity, IChartHabit } from "@/shared/lib"
 
-export const normalizeChartHabits = (data: IHabit[]): IChartHabit[] => {
+export const normalizeChartHabits = (data: HabitEntity[]): IChartHabit[] => {
   const modifiedHabits = data.flatMap((item) => {
     const days = item.day.split(",")
     return days.map((day) => ({

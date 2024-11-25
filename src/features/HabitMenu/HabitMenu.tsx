@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 
 import { ROUTES } from "@/shared/config"
-import { type IHabit, deleteHabit } from "@/shared/lib"
+import { type HabitEntity, deleteHabit } from "@/shared/lib"
 import { AnimatedIcon } from "@/shared/ui"
 
 const DROPDOWN_KEYS = {
@@ -22,7 +22,7 @@ const DROPDOWN_KEYS = {
   DELETE: "delete"
 }
 
-const HabitMenu = ({ habit }: { habit: IHabit }) => {
+const HabitMenu = ({ habit }: { habit: HabitEntity }) => {
   const router = useRouter()
   const onCopy = (name: string) => {
     navigator.clipboard.writeText(name)

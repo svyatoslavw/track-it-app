@@ -1,7 +1,6 @@
 "use client"
 
 import { Accordion, AccordionItem } from "@nextui-org/accordion"
-import { Button } from "@nextui-org/button"
 import { AuthError } from "next-auth"
 import { signIn } from "next-auth/react"
 import { useMemo, useState } from "react"
@@ -67,12 +66,7 @@ const SignInForm = () => {
   }
 
   return (
-    <div className="flex min-h-screen flex-col justify-between bg-foreground-200 p-4 md:p-8">
-      <div className="flex w-full justify-end">
-        <Button color="secondary" variant="shadow" size="sm">
-          Install
-        </Button>
-      </div>
+    <>
       <div className="flex flex-grow flex-col items-center justify-center text-center">
         <div className="mb-4 flex items-center justify-center">
           <Logotype size="lg" />
@@ -129,7 +123,7 @@ const SignInForm = () => {
         <InfoMessage text="Application is in beta. We appreciate your feedback." />
         <InfoMessage text="Your name and email will be visible on the site and serve as your primary identifiers." />
       </div>
-    </div>
+    </>
   )
 }
 

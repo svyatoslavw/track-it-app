@@ -2,12 +2,12 @@
 import type { UserRole } from "@prisma/client"
 import "next-auth"
 
-import { IUser } from "@/shared/lib/types"
+import { UserEntity } from "@/shared/lib/types"
 
 declare module "next-auth" {
   interface Session {
     accessToken?: string
-    user: IUser
+    user: UserEntity
   }
 }
 

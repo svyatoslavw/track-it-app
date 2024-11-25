@@ -4,14 +4,14 @@ import { TicketCheck, TicketX } from "lucide-react"
 import { TableDayWrapper } from "./TableDayWrapper"
 import { HabitCard } from "@/entities/habit"
 import { HabitMenu } from "@/features"
-import { type ICategory, type IDay, type IHabit, TypeHabitStatus, cn } from "@/shared/lib"
+import { type HabitEntity, HabitStatus, type ICategory, type IDay, cn } from "@/shared/lib"
 
 interface DayColumnProps {
   day: IDay
-  habits: IHabit[]
+  habits: HabitEntity[]
   isSelected: boolean
   categories: ICategory[]
-  onButtonAction: (id: string, status: TypeHabitStatus) => void
+  onButtonAction: (id: string, status: HabitStatus) => void
 }
 
 const TableDayColumn = ({

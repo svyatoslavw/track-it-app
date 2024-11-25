@@ -1,10 +1,10 @@
 "use client"
 
-import { IHabit } from "@/shared/lib"
+import { HabitEntity } from "@/shared/lib"
 import { InfoMessage, PageTitle, PageWrapper } from "@/shared/ui"
 import { RadarHabitChart } from "@/widgets"
 
-const AnalyticsPage = ({ habits }: { habits: IHabit[] }) => {
+const AnalyticsPage = ({ habits }: { habits: HabitEntity[] }) => {
   return (
     <PageWrapper size="full">
       <PageTitle>Analytics</PageTitle>

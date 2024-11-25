@@ -1,9 +1,9 @@
 import type { EventInput } from "@fullcalendar/core"
 
 import { getDateForWeekday } from "./date-helpers"
-import type { IHabit } from "@/shared/lib"
+import type { HabitEntity } from "@/shared/lib"
 
-export const normalizeCalendarHabits = (habits: IHabit[]): EventInput[] => {
+export const normalizeCalendarHabits = (habits: HabitEntity[]): EventInput[] => {
   return habits
     .map((habit) => {
       const habitDays = habit.day.split(",")

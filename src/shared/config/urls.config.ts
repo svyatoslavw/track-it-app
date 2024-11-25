@@ -30,6 +30,6 @@ export const ROUTES = {
   CATEGORIES: "/categories",
   SETTINGS: "/settings",
   FEEDBACK: "/feedback",
-  ISSUE: "/issue",
+  ISSUE: "https://github.com/svyatoslavw/track-it-app/issues",
   AUTH: "/auth"
 }

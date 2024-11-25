@@ -10,10 +10,10 @@ import { Clock10Icon } from "lucide-react"
 
 import { useUpdateHabitForm } from "./useUpdateHabitForm"
 import { categories, days } from "@/shared/constans"
-import { IHabit } from "@/shared/lib"
+import { HabitEntity } from "@/shared/lib"
 import { AiLogotype, InfoMessage } from "@/shared/ui"
 
-const UpdateHabitForm = ({ habit }: { habit: IHabit }) => {
+const UpdateHabitForm = ({ habit }: { habit: HabitEntity }) => {
   const { formik, isLoading, onSelectCategory, onSelectDay, onSelectTime } =
     useUpdateHabitForm(habit)
 

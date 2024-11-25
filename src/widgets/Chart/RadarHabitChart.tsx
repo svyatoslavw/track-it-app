@@ -4,7 +4,7 @@ import { TicketCheck, TicketX } from "lucide-react"
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
 
 import { normalizeChartHabits } from "@/entities/habit"
-import { IHabit } from "@/shared/lib"
+import { HabitEntity } from "@/shared/lib"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/shared/ui"
 
 const chartConfig = {
@@ -20,17 +20,27 @@ const chartConfig = {
   }
 } satisfies ChartConfig
 
-const RadarHabitChart = ({ habits }: { habits: IHabit[] }) => {
+const COMPLETE_COLOR = "#7c3aed"
+const INCOMPLETE_COLOR = "#9333ea"
+
+const RadarHabitChart = ({ habits }: { habits: HabitEntity[] }) => {
   const data = normalizeChartHabits(habits)
+
+  const commonProps = (dataKey: "completed" | "incompleted") => ({
+    dataKey,
+    fill: dataKey === "completed" ? COMPLETE_COLOR : INCOMPLETE_COLOR,
+    fillOpacity: dataKey === "completed" ? 0.6 : 0.2,
+    dot: { r: 3, fillOpacity: 1 }
+  })
 
   return (
     <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-screen">
       <RadarChart data={data}>
         <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-        <PolarAngleAxis dataKey="month" />
+        <PolarAngleAxis dataKey="day" />
         <PolarGrid />
-        <Radar dataKey="completed" fill="#7c3aed" fillOpacity={0.6} />
-        <Radar dataKey="incompleted" fill="#9333ea" />
+        <Radar {...commonProps("completed")} />
+        <Radar {...commonProps("incompleted")} />
       </RadarChart>
     </ChartContainer>
   )

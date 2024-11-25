@@ -1,8 +1,8 @@
 import { User } from "@nextui-org/user"
 
-import { IUser } from "@/shared/lib"
+import { UserEntity } from "@/shared/lib"
 
-const UserInfo = ({ user }: { user: IUser }) => {
+const UserInfo = ({ user }: { user: UserEntity }) => {
   return (
     <User
       avatarProps={{

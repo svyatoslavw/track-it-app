@@ -11,15 +11,15 @@ import toast from "react-hot-toast"
 import { useCategoryStore } from "@/entities/category"
 import { getDateForWeekday, getWeekdayName, normalizeCalendarHabits } from "@/entities/habit"
 import {
+  HabitEntity,
+  HabitStatus,
   ICategory,
-  IHabit,
-  TypeHabitStatus,
   getFormattedHabitCategory,
   updateHabitDay
 } from "@/shared/lib"
 import updateHabitStatus from "@/shared/lib/actions"
 
-// const initialHabits: IHabit[] = [
+// const initialHabits: HabitEntity[] = [
 //   {
 //     id: "1",
 //     createdAt: new Date(),
@@ -54,11 +54,11 @@ const INCOMPLETED_MESSAGE = "Habit incompleted."
 interface EvenrContentProps {
   eventInfo: EventContentArg
   categories: ICategory[]
-  onCheckHabit: (id: string, status: TypeHabitStatus) => void
+  onCheckHabit: (id: string, status: HabitStatus) => void
 }
 
 function renderEventContent({ eventInfo, categories, onCheckHabit }: EvenrContentProps) {
-  const { habit } = eventInfo.event.extendedProps as { habit: IHabit }
+  const { habit } = eventInfo.event.extendedProps as { habit: HabitEntity }
   return (
     <div className="flex w-full flex-col space-y-1">
       {/* <span
@@ -105,14 +105,14 @@ function renderEventContent({ eventInfo, categories, onCheckHabit }: EvenrConten
   )
 }
 
-const CalendarWithHabits = ({ habits: initialHabits }: { habits: IHabit[] }) => {
+const CalendarWithHabits = ({ habits: initialHabits }: { habits: HabitEntity[] }) => {
   const { categories } = useCategoryStore()
   const normalHabits = normalizeCalendarHabits(initialHabits)
 
   const onEventDrop = (info: EventDropArg) => {
     const { habit: habitProps } = info.event.extendedProps
 
-    const habit = habitProps as IHabit
+    const habit = habitProps as HabitEntity
     const oldStart = info.oldEvent.start
     const newStart = info.event.start
 
@@ -137,7 +137,7 @@ const CalendarWithHabits = ({ habits: initialHabits }: { habits: IHabit[] }) => 
     }
   }
 
-  const onCheckHabit = async (id: string, status: TypeHabitStatus) => {
+  const onCheckHabit = async (id: string, status: HabitStatus) => {
     // const toast = (await import("react-hot-toast")).default
 
     try {

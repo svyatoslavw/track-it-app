@@ -7,9 +7,9 @@ import { useCategoryStore } from "@/entities/category"
 import { HabitCard } from "@/entities/habit"
 import { HabitMenu } from "@/features"
 import { ROUTES } from "@/shared/config"
-import type { IHabit } from "@/shared/lib"
+import type { HabitEntity } from "@/shared/lib"
 
-const HabitList = ({ habits }: { habits: IHabit[] }) => {
+const HabitList = ({ habits }: { habits: HabitEntity[] }) => {
   const { categories } = useCategoryStore()
 
   return (

@@ -1,5 +1,6 @@
 export { CreateHabitForm } from "./CreateHabit/CreateHabitForm"
 export { HabitMenu } from "./HabitMenu/HabitMenu"
+export { InstallPWA } from "./InstallPWA/InstallPWA"
 export { SignInForm } from "./SignIn/SignInForm"
 export { UpdateCategoryForm } from "./UpdateCategory/UpdateCategoryForm"
 export { default as UpdateCategoryItem } from "./UpdateCategory/UpdateSubcategoryForm"

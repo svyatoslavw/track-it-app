@@ -44,14 +44,14 @@ interface CommonModel {
   updatedAt: Date
 }
 
-export interface IUser extends CommonModel {
+export interface UserEntity extends CommonModel {
   name: string
   email: string
   image: string
   role: EnumUserRoles
 }
 
-export interface IHabit extends CommonModel {
+export interface HabitEntity extends CommonModel {
   lastCheckedAt: Date
   completedTimes: number
   incompletedTimes: number
@@ -61,7 +61,7 @@ export interface IHabit extends CommonModel {
   category: string
 }
 
-export type ICreateHabit = TypedPick<IHabit, "title" | "day" | "time" | "category">
+export type ICreateHabit = TypedPick<HabitEntity, "title" | "day" | "time" | "category">
 
 export type TypeDay =
   | "Sunday"
@@ -72,7 +72,7 @@ export type TypeDay =
   | "Friday"
   | "Saturday"
 
-export type TypeHabitStatus = "complete" | "incomplete"
+export type HabitStatus = "complete" | "incomplete"
 
 export interface IDay {
   emoji: string

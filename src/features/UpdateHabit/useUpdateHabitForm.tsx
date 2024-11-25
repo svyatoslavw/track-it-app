@@ -2,7 +2,7 @@ import { useFormik } from "formik"
 import toast from "react-hot-toast"
 
 import { RESPONSE_STATUS } from "@/shared/constans"
-import { IHabit, updateHabit } from "@/shared/lib"
+import { HabitEntity, updateHabit } from "@/shared/lib"
 
 interface IUpdateHabitForm {
   time: string
@@ -11,7 +11,7 @@ interface IUpdateHabitForm {
   title: string
 }
 
-export const useUpdateHabitForm = (habit: IHabit) => {
+export const useUpdateHabitForm = (habit: HabitEntity) => {
   const formik = useFormik<IUpdateHabitForm>({
     initialValues: {
       category: habit.category,

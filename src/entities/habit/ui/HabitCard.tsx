@@ -3,15 +3,15 @@
 import { motion } from "framer-motion"
 
 import {
+  type HabitEntity,
   type ICategory,
-  type IHabit,
   cn,
   getFormattedHabitCategory,
   getFormattedHabitDay
 } from "@/shared/lib"
 
 interface HabitItemProps {
-  habit: IHabit
+  habit: HabitEntity
   variant?: "vertical" | "horizontal"
   children?: React.ReactNode
   categories: ICategory[]

@@ -8,14 +8,14 @@ import { useCategoryStore } from "@/entities/category"
 import { useGroupedHabits, usePersistedState } from "@/entities/habit"
 import { days } from "@/shared/constans"
 import { useFakeLoading } from "@/shared/hooks"
-import { type IHabit, TypeHabitStatus, cn } from "@/shared/lib"
+import { type HabitEntity, HabitStatus, cn } from "@/shared/lib"
 import updateHabitStatus from "@/shared/lib/actions"
 
 const ERROR_MESSAGE = "Something went wrong."
 const COMPLETED_MESSAGE = "Habit completed."
 const INCOMPLETED_MESSAGE = "Habit incompleted."
 
-const HabitTable = ({ habits }: { habits: IHabit[] }) => {
+const HabitTable = ({ habits }: { habits: HabitEntity[] }) => {
   const { categories } = useCategoryStore()
 
   const [isLoading] = useFakeLoading(true, 400)
@@ -23,7 +23,7 @@ const HabitTable = ({ habits }: { habits: IHabit[] }) => {
 
   const groupedHabits = useGroupedHabits(habits)
 
-  const onCheckHabit = async (id: string, status: TypeHabitStatus) => {
+  const onCheckHabit = async (id: string, status: HabitStatus) => {
     const toast = (await import("react-hot-toast")).default
 
     try {

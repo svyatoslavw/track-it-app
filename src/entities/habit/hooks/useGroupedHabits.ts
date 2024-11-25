@@ -1,6 +1,6 @@
-import type { IHabit, TypeDay } from "@/shared/lib"
+import type { HabitEntity, TypeDay } from "@/shared/lib"
 
-export function useGroupedHabits(habits: IHabit[]) {
+export function useGroupedHabits(habits: HabitEntity[]) {
   return habits
     .sort((a, b) => a.time.localeCompare(b.time))
     .reduce(
@@ -13,6 +13,6 @@ export function useGroupedHabits(habits: IHabit[]) {
 
         return acc
       },
-      {} as Record<TypeDay, IHabit[]>
+      {} as Record<TypeDay, HabitEntity[]>
     )
 }
