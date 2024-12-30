@@ -4,151 +4,61 @@ import { revalidatePath } from "next/cache"
 import { cache } from "react"
 
 import { ROUTES } from "../config"
-import { RESPONSE_STATUS } from "../constans"
+import { RESPONSE_STATUS, days } from "../constans"
 
-import { auth } from "@/auth"
 import { CompletionAIModel } from "./ai"
 import { prisma } from "./db"
-import { HabitEntity, HabitStatus, ICategory, ICreateHabit, IDay } from "./types"
+import { HabitEntity, HabitStatus, ICategory, ICreateHabit } from "./types"
+import { auth } from "@/auth"
 
-const habitCategories: ICategory[] = [
-  {
-    id: crypto.randomUUID(),
-    subject: "Health & Fitness",
-    items: [
-      { id: crypto.randomUUID(), emoji: "🏋️", name: "Exercise" },
-      { id: crypto.randomUUID(), emoji: "🥗", name: "Healthy Eating" },
-      { id: crypto.randomUUID(), emoji: "🛏️", name: "Sleep" },
-      { id: crypto.randomUUID(), emoji: "💧", name: "Hydration" },
-      { id: crypto.randomUUID(), emoji: "🧘‍♂️", name: "Meditation" },
-      { id: crypto.randomUUID(), emoji: "🚶", name: "Daily Steps" }
-    ]
-  },
-  {
-    id: crypto.randomUUID(),
-    subject: "Learning & Development",
-    items: [
-      { id: crypto.randomUUID(), emoji: "📚", name: "Reading" },
-      { id: crypto.randomUUID(), emoji: "🎓", name: "Learning" },
-      { id: crypto.randomUUID(), emoji: "💻", name: "Coding" },
-      { id: crypto.randomUUID(), emoji: "📝", name: "Journaling" },
-      { id: crypto.randomUUID(), emoji: "🎨", name: "Creative Work" }
-    ]
-  },
-  {
-    id: crypto.randomUUID(),
-    subject: "Work & Productivity",
-    items: [
-      { id: crypto.randomUUID(), emoji: "💼", name: "Work Tasks" },
-      { id: crypto.randomUUID(), emoji: "📆", name: "Planning" },
-      { id: crypto.randomUUID(), emoji: "✅", name: "Daily Goals" },
-      { id: crypto.randomUUID(), emoji: "📈", name: "Career Development" }
-    ]
-  },
-  {
-    id: crypto.randomUUID(),
-    subject: "Personal Care",
-    items: [
-      { id: crypto.randomUUID(), emoji: "🛁", name: "Skincare" },
-      { id: crypto.randomUUID(), emoji: "💇‍♂️", name: "Grooming" },
-      { id: crypto.randomUUID(), emoji: "💅🏼", name: "Self-care" },
-      { id: crypto.randomUUID(), emoji: "🛌", name: "Relaxation" }
-    ]
-  },
-  {
-    id: crypto.randomUUID(),
-    subject: "Social & Relationships",
-    items: [
-      { id: crypto.randomUUID(), emoji: "👥", name: "Family Time" },
-      { id: crypto.randomUUID(), emoji: "📞", name: "Stay in Touch" },
-      { id: crypto.randomUUID(), emoji: "💬", name: "Social Interactions" },
-      { id: crypto.randomUUID(), emoji: "🧑‍🤝‍🧑", name: "Networking" }
-    ]
-  },
-  {
-    id: crypto.randomUUID(),
-    subject: "Miscellaneous",
-    items: [
-      { id: crypto.randomUUID(), emoji: "🛒", name: "Grocery Shopping" },
-      { id: crypto.randomUUID(), emoji: "🌱", name: "Gardening" },
-      { id: crypto.randomUUID(), emoji: "🎶", name: "Listening to Music" },
-      { id: crypto.randomUUID(), emoji: "🎮", name: "Gaming" },
-      { id: crypto.randomUUID(), emoji: "🚗", name: "Driving" }
-    ]
-  },
-  {
-    id: crypto.randomUUID(),
-    subject: "General",
-    items: [{ id: crypto.randomUUID(), emoji: "🤔", name: "Unknown" }]
-  }
-]
-
-const days: Omit<IDay, "color">[] = [
-  { emoji: "☀️", day: "Sunday" },
-  { emoji: "🌞", day: "Monday" },
-  { emoji: "🌕", day: "Tuesday" },
-  { emoji: "🌩️", day: "Wednesday" },
-  { emoji: "⚡", day: "Thursday" },
-  { emoji: "🔥", day: "Friday" },
-  { emoji: "🌙", day: "Saturday" }
-]
-
-export async function getHabitTimeAI(userPrompt: string): Promise<string> {
+export async function generateAIPrompt(userPrompt: string): Promise<string> {
   if (!userPrompt) {
     throw new Error("User prompt is required.")
   }
 
   try {
-    const prompt =
-      `${userPrompt}. Specify the time for performing this action in the format "HH:mm" (e.g., 11:45 or 04:34). ` +
-      "Choose the optimal time for this action in real life. If an exact time cannot be determined, select one at your discretion. " +
-      "Display only the time, with no additional text."
-
-    return CompletionAIModel(prompt)
+    return CompletionAIModel(userPrompt)
   } catch (err) {
     throw err
   }
 }
+
+export async function getHabitTimeAI(userPrompt: string): Promise<string> {
+  const prompt =
+    `${userPrompt}. Specify the time for performing this action in the format "HH:mm" (e.g., 11:45 or 04:34). ` +
+    "Choose the optimal time for this action in real life. If an exact time cannot be determined, select one at your discretion. " +
+    "Display only the time, with no additional text."
+
+  return generateAIPrompt(prompt)
+}
+
 export const getCachedHabitTimeAI = cache(getHabitTimeAI)
 
-export async function getHabitCategoryAI(userPrompt: string): Promise<string> {
-  if (!userPrompt) {
-    throw new Error("Categories or user prompt are required.")
-  }
+export async function getHabitCategoryAI(
+  userPrompt: string,
+  habitCategories: ICategory[]
+): Promise<string> {
+  const categoriesStr = habitCategories
+    .flatMap((subject) => subject.items.map((item) => item.name))
+    .filter(Boolean)
+    .join(", ")
 
-  try {
-    const categoriesStr = habitCategories
-      .flatMap((subject) => subject.items.map((item) => item.name))
-      .filter(Boolean)
-      .join(", ")
+  const prompt =
+    `Given a list of categories: ${categoriesStr} - Select the most appropriate category from the list for the "${userPrompt}" prompt in word. ` +
+    "Display only the category, without any additional text. Even if you cannot determine the time, then withdraw it randomly, without any additional text."
 
-    const prompt =
-      `Given a list of categories: ${categoriesStr} - Select the most appropriate category from the list for the "${userPrompt}" prompt in word. ` +
-      "Display only the category, without any additional text. Even if you cannot determine the time, then withdraw it randomly, without any additional text."
-
-    return CompletionAIModel(prompt)
-  } catch (err) {
-    throw err
-  }
+  return generateAIPrompt(prompt)
 }
 export const getCachedHabitCategoryAI = cache(getHabitCategoryAI)
 
 export async function getHabitDayAI(userPrompt: string): Promise<string> {
-  if (!userPrompt) {
-    throw new Error("Days or user prompt are required.")
-  }
+  const daysStr = days.flatMap((day) => day.day).join(", ")
 
-  try {
-    const daysStr = days.flatMap((day) => day.day).join(", ")
+  const prompt =
+    `Given a list of days: ${daysStr}. Select the best day to implement the habit: ${userPrompt} ` +
+    "Print only the selected day in one word from the list. If it is not possible to choose a suitable day, select a random one from the list. Display only the day, without any additional text. No extra text."
 
-    const prompt =
-      `Given a list of days: ${daysStr}. Select the best day to implement the habit: ${userPrompt} ` +
-      "Print only the selected day in one word from the list. If it is not possible to choose a suitable day, select a random one from the list. Display only the day, without any additional text. No extra text."
-
-    return CompletionAIModel(prompt)
-  } catch (err) {
-    throw err
-  }
+  return generateAIPrompt(prompt)
 }
 export const getCachedHabitDayAI = cache(getHabitDayAI)
 
@@ -233,7 +143,7 @@ export async function getHabitById(id: string) {
   return habit
 }
 
-export async function getHabits() {
+export async function getHabits(email?: string) {
   const session = await auth()
 
   if (!session) {
@@ -242,7 +152,7 @@ export async function getHabits() {
 
   const habits = await prisma.habit.findMany({
     where: {
-      user: { email: session.user.email }
+      user: { email: email || session.user.email }
     }
   })
 

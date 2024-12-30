@@ -4,6 +4,7 @@ import { useFormik } from "formik"
 import { useCallback, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 
+import { useCategoryStore } from "@/entities/category"
 import { RESPONSE_STATUS, days } from "@/shared/constans"
 import {
   createHabit,
@@ -43,13 +44,14 @@ export const useCreateHabitForm = () => {
   })
 
   const [isLoading, setIsLoading] = useState(false)
+  const categories = useCategoryStore((state) => state.categories)
 
   const generateOptions = async (prompt: string) => {
     setIsLoading(true)
     try {
       const [time, category, day] = await Promise.all([
         await getHabitTimeAI(prompt),
-        await getHabitCategoryAI(prompt),
+        await getHabitCategoryAI(prompt, categories),
         await getHabitDayAI(prompt)
       ])
 

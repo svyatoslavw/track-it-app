@@ -105,7 +105,7 @@ function renderEventContent({ eventInfo, categories, onCheckHabit }: EvenrConten
   )
 }
 
-const CalendarWithHabits = ({ habits: initialHabits }: { habits: HabitEntity[] }) => {
+const HabitCalendar = ({ habits: initialHabits }: { habits: HabitEntity[] }) => {
   const { categories } = useCategoryStore()
   const normalHabits = normalizeCalendarHabits(initialHabits)
 
@@ -173,4 +173,4 @@ const CalendarWithHabits = ({ habits: initialHabits }: { habits: HabitEntity[] }
   )
 }
 
-export { CalendarWithHabits }
+export { HabitCalendar }

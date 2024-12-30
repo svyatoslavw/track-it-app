@@ -9,7 +9,7 @@ import React from "react"
 
 import { type HabitEntity, cn } from "@/shared/lib"
 
-const HabitCalendar = ({ habits }: { habits: HabitEntity[] }) => {
+const TestHabitCalendar = ({ habits }: { habits: HabitEntity[] }) => {
   let defaultDate = today(getLocalTimeZone())
   let [value, setValue] = React.useState(defaultDate)
   let { locale } = useLocale()
@@ -110,4 +110,4 @@ const HabitCalendar = ({ habits }: { habits: HabitEntity[] }) => {
   )
 }
 
-export { HabitCalendar }
+export { TestHabitCalendar }

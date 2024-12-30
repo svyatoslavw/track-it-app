@@ -13,7 +13,7 @@ const HabitList = ({ habits }: { habits: HabitEntity[] }) => {
   const { categories } = useCategoryStore()
 
   return (
-    <div className="mt-10 grid gap-2">
+    <div className="mt-10 flex flex-col gap-2">
       {habits.length ? (
         <AnimatePresence>
           {habits.map((habit) => (
